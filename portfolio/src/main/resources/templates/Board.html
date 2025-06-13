@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${boardType} + ' 게시판 목록'"></title>
+</head>
+<body>
+    <h1 th:text="${boardType} + ' 게시판'">게시판</h1>
+    <a th:href="@{'/board/write'(type=${boardType})}">글쓰기</a>
+    <ul>
+        <li th:each="board : ${boards}">
+            <a th:href="@{'/board/view/' + ${board.id}}">
+                <strong th:text="${board.title}"></strong> - <span th:text="${board.author}"></span>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>
+
+<!-- templates/board/view.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${board.title}"></title>
+</head>
+<body>
+    <h1 th:text="${board.title}">제목</h1>
+    <p><strong>작성자:</strong> <span th:text="${board.author}"></span></p>
+    <div th:utext="${board.content}"></div>
+
+    <form th:action="@{'/board/delete/' + ${board.id}}" method="post">
+        <input type="hidden" name="type" th:value="${board.boardType}"/>
+        <button type="submit">삭제</button>
+    </form>
+    <a th:href="@{'/board/list'(type=${board.boardType})}">목록으로</a>
+</body>
+</html>
+
+<!-- templates/board/write.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글쓰기</title>
+</head>
+<body>
+    <h1 th:text="${boardType} + ' 게시판 - 글쓰기'"></h1>
+    <form method="post" th:action="@{/board/write}">
+        <input type="hidden" name="boardType" th:value="${boardType}"/>
+
+        <label>제목</label>
+        <input type="text" name="title"/><br/>
+
+        <label>작성자</label>
+        <input type="text" name="author"/><br/>
+
+        <label>내용</label>
+        <textarea name="content" rows="10" cols="50"></textarea><br/>
+
+        <button type="submit">등록</button>
+    </form>
+    <a th:href="@{'/board/list'(type=${boardType})}">취소</a>
+</body>
+</html>

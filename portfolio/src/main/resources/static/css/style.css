@@ -1,0 +1,294 @@
+/* 기본 스타일 및 레이아웃 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column; /* 헤더와 메인 콘텐츠를 세로로 쌓기 */
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* 부드러운 그라데이션 배경 */
+    color: #333;
+    padding: 20px; /* 전체 페이지 여백 */
+    box-sizing: border-box; /* 패딩을 너비/높이에 포함 */
+}
+
+/* 헤더 스타일 */
+header {
+    width: 100%;
+    max-width: 960px; /* 콘텐츠 최대 너비 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e0e6ed; /* 하단 구분선 */
+}
+
+header h1 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+/* 메인 콘텐츠 영역 */
+.main-content {
+    display: flex;
+    flex-wrap: wrap; /* 섹션이 작은 화면에서 줄 바꿈 되도록 허용 */
+    gap: 30px; /* 섹션 간 간격 */
+    width: 100%;
+    max-width: 960px;
+    justify-content: center; /* 섹션이 전체 너비를 채우지 못할 경우 중앙 정렬 */
+}
+
+/* 각 섹션 (프로젝트, 노션) 스타일 */
+section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    flex: 1; /* 섹션이 공간에 따라 유연하게 늘어나고 줄어들도록 */
+    min-width: 300px; /* 줄 바꿈 되기 전 최소 너비 */
+    box-sizing: border-box;
+}
+
+section h2 {
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #007bff; /* 제목 하단에 강조선 */
+    padding-bottom: 10px;
+    display: inline-block; /* 하단 선이 제목 너비에 맞춰지도록 */
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+section ul li {
+    margin-bottom: 12px;
+    font-size: 1.1em;
+}
+
+section ul li a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+section ul li a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+section > a { /* "전체 보기" 링크 */
+    display: block;
+    margin-top: 25px;
+    text-align: right;
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+section > a:hover {
+    color: #495057;
+}
+
+/* 로그인 버튼 (헤더에 위치) */
+#openLoginBtn {
+    padding: 10px 20px;
+    background-color: #28a745; /* 로그인 버튼 초록색 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#openLoginBtn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+#openLoginBtn:active {
+    transform: translateY(0);
+}
+
+/* 모달 배경 */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* 약간 더 어두운 오버레이 */
+    z-index: 1000; /* 최상단에 위치 */
+    animation: fadeInModal 0.3s ease-out;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 모달 콘텐츠 */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 더 강한 그림자 */
+    text-align: center;
+    animation: slideInModal 0.4s ease-out;
+}
+
+@keyframes slideInModal {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.modal-content h2 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-group input[type="text"]:focus,
+.input-group input[type="password"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.modal-content button { /* 모달 내 로그인 버튼 */
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.modal-content button:active {
+    transform: translateY(0);
+}
+
+#loginResult {
+    margin-top: 25px;
+    font-weight: 600;
+    font-size: 1.05em;
+    min-height: 20px;
+}
+
+.success {
+    color: #28a745; /* 성공 메시지 녹색 */
+}
+
+.error {
+    color: #dc3545; /* 오류 메시지 빨간색 */
+}
+
+/* GitHub 바로가기 섹션 스타일 */
+.github-section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    flex: 1; /* 메인 콘텐츠 내에서 다른 섹션과 동일하게 공간을 차지 */
+    min-width: 300px; /* 줄 바꿈 되기 전 최소 너비 */
+    box-sizing: border-box;
+    text-align: center; /* 내용을 중앙 정렬 */
+    cursor: pointer; /* 클릭 가능한 요소임을 표시 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* 호버 효과 */
+    display: flex; /* 내부 요소 정렬을 위해 플렉스박스 사용 */
+    flex-direction: column; /* 아이콘과 텍스트를 세로로 쌓기 */
+    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+}
+
+.github-section:hover {
+    transform: translateY(-5px); /* 호버 시 살짝 위로 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* 그림자 강조 */
+}
+
+.github-section h2 {
+    color: #2c3e50; /* GitHub 섹션 제목 색상 */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #007bff; /* 제목 하단에 강조선 */
+    padding-bottom: 10px;
+    display: inline-block; /* 하단 선이 제목 너비에 맞춰지도록 */
+}
+
+.github-section .github-icon {
+    font-size: 4em; /* 아이콘 크기 */
+    color: #333; /* GitHub 아이콘 색상 (검은색에 가깝게) */
+    margin-bottom: 15px;
+    /* Font Awesome을 사용한다면 여기에 아이콘 폰트 패밀리 지정 */
+    /* font-family: "Font Awesome 5 Brands"; */
+}
+
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column; /* 작은 화면에서 섹션을 세로로 쌓기 */
+        align-items: center;
+    }
+    section {
+        width: 100%;
+        max-width: 400px; /* 섹션의 최대 너비 제한 */
+    }
+    header {
+        flex-direction: column; /* 제목과 버튼을 세로로 쌓기 */
+        text-align: center;
+    }
+    header h1 {
+        margin-bottom: 15px;
+    }
+}

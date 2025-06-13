@@ -1,15 +1,15 @@
 spring:
-    config:
+  config:
     import: classpath:application-secret.yml
 
   application:
     name: portfolio
 
   datasource:
-    url: jdbc:mysql://portfolio.sangwon97.com:3306/portfolio?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://portfolio.sangwon97.com:3306/portfolio
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-   jpa:
+  jpa:
     hibernate:
       ddl-auto: update
     show-sql: true

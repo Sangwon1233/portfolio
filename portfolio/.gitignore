@@ -36,4 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+# secret config
+src/main/resources/application-secret.yml
+
+# 키
 devtools.pem

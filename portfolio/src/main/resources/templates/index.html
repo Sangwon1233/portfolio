@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>이상원 포트폴리오</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"> 
+</head>
+<body>
+    <header>
+        <h1>이상원 포트폴리오</h1>
+        <button id="openLoginBtn">관리자 로그인</button>
+    </header>
+
+    <div class="main-content">
+        <section>
+            <h2>프로젝트 게시판</h2>
+            <ul>
+                <li th:each="post : ${recentProjects}">
+                    <a th:href="@{'/board/view/' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
+                </li>
+            </ul>
+            <a href="/board/list?type=project">▶ 전체 보기</a>
+        </section>
+
+        <section>
+            <h2>개인 노션 게시판</h2>
+            <ul>
+                <li th:each="post : ${recentNotions}">
+                    <a th:href="@{'/board/view/' + ${post.id}}" th:text="${post.title}">게시글 제목</a>
+                </li>
+            </ul>
+            <a href="/board/list?type=notion">▶ 전체 보기</a>
+        </section>
+
+        <!--github-->
+        <section class="github-section" onclick="window.open('https://github.com/Sangwon1233', '_blank');">
+            <i class="fab fa-github github-icon"></i> <h2>GitHub 바로가기</h2>
+        </section>
+    </div>
+
+    <div class="modal-backdrop" id="loginModal">
+        <div class="modal-content">
+            <h2>관리자 로그인</h2>
+            <div class="input-group">
+                <label for="username">아이디</label>
+                <input type="text" id="username" autocomplete="username"/>
+            </div>
+            <div class="input-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" autocomplete="current-password"/>
+            </div>
+            <button onclick="submitLogin()">로그인</button>
+            <p id="loginResult"></p>
+        </div>
+    </div>
+
+    <script>
+        const loginModal = document.getElementById("loginModal");
+
+        // 모달 열기 버튼 클릭 이벤트
+        document.getElementById("openLoginBtn").addEventListener("click", () => {
+            loginModal.style.display = "block";
+            // 모달을 열 때 이전 로그인 결과 메시지를 지웁니다.
+            document.getElementById("loginResult").innerText = "";
+            document.getElementById("loginResult").className = "";
+            // 필요하다면 입력 필드도 초기화합니다.
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+        });
+
+        // 모달 바깥 클릭 시 닫기
+        window.addEventListener("click", (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = "none";
+            }
+        });
+
+        // 로그인 처리 함수
+        function submitLogin() {
+            fetch("/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value
+                })
+            })
+            .then(res => {
+                const loginResultDiv = document.getElementById("loginResult");
+                if (res.ok) {
+                    loginResultDiv.innerText = "✅ 로그인 성공!";
+                    loginResultDiv.className = "success";
+
+                    // 성공 메시지를 보여준 후 1초 뒤에 모달을 닫습니다.
+                    setTimeout(() => {
+                        loginModal.style.display = "none";
+                        // 성공 시 관리자 페이지로 리다이렉트 할 수 있습니다.
+                        // window.location.href = "/admin/dashboard";
+                        document.getElementById("openLoginBtn").style.display = "none"; // 로그인 버튼 숨기기
+                    }, 1000); 
+
+                } else {
+                    loginResultDiv.innerText = "❌ 로그인 실패";
+                    loginResultDiv.className = "error";
+                }
+            })
+            .catch(error => {
+                console.error("로그인 요청 실패:", error);
+                const loginResultDiv = document.getElementById("loginResult");
+                loginResultDiv.innerText = "🚨 오류 발생! 다시 시도해주세요.";
+                loginResultDiv.className = "error";
+            });
+        }
+    </script>
+</body>
+</html>
