@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.sangwon97.portfolio.domain.User;
+import com.sangwon97.portfolio.domain.entity.User;
 import com.sangwon97.portfolio.repository.UserRepository;
 
 @Service

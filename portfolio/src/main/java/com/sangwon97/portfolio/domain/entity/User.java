@@ -1,4 +1,4 @@
-package com.sangwon97.portfolio.domain;
+package com.sangwon97.portfolio.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
