@@ -2,6 +2,9 @@ package com.sangwon97.portfolio.controller;
 
 import com.sangwon97.portfolio.domain.entity.Board;
 import com.sangwon97.portfolio.service.BoardService;
+
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +18,26 @@ public class BoardController {
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
-
     // 게시판 목록
     @GetMapping("/list")
-    public String list(@RequestParam String type, Model model) {
-        model.addAttribute("boards", boardService.getBoardsByType(type));
+    public String list(@RequestParam String type,
+                    @RequestParam(required = false) String subCategory,
+                    Model model) {
+        List<Board> boards = boardService.getBoards(type, subCategory);
+
+        // ✅ 사용자에게 보여줄 이름 설정
+        String displayName = switch (type) {
+            case "notion" -> "메모";
+            case "project" -> "프로젝트";
+            case "company-issue" -> "회사 이슈";
+            case "ideas" -> "아이디어";
+            default -> type;
+        };
+
+        model.addAttribute("boards", boards);
         model.addAttribute("boardType", type);
+        model.addAttribute("subCategory", subCategory);
+        model.addAttribute("boardTypeDisplay", displayName);
         return "board/list";
     }
 
@@ -51,4 +68,7 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/list?type=" + type;
     }
+
+    
+   
 }

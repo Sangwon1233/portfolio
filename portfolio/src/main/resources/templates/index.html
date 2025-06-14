@@ -7,12 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+    <!--헤더-->
+    <div th:replace="header/header :: header"></div>
 <body>
-    <header class="main-header">
-        <h1>이상원 포트폴리오</h1>
-        <button id="openLoginBtn" class="login-button">관리자 로그인</button>
-    </header>
-
     <div class="main-container">
         <div class="content-wrapper">
             <aside class="profile-sidebar">
@@ -65,7 +62,7 @@
 
 
                 <section class="board-card">
-                    <h2>나만의 구상 </h2>
+                    <h2>아이디어 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentIdeas}">
                             <a th:href="@{'/board/view/' + ${post.id}}" th:text="${post.title}">나만의 구상 게시글 제목</a>

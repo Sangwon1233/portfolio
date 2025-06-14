@@ -30,9 +30,16 @@ public class Board {
     @Column(name = "board_type")
     private String boardType; // "project" or "notion"
 
+    private String subCategory; // notion만 사용하는 필드
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = this.createdAt == null ? LocalDateTime.now() : this.createdAt;
+    }
 }
