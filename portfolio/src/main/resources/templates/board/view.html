@@ -9,11 +9,13 @@
     <div th:replace="header/header :: header"></div>
 
     <div class="board-page-container">
-        <h1 class="board-page-title" th:text="${board.title}">제목</h1>
+        <h1 class="board-page-title" th:text="${boardTypeDisplay} + ' 게시판'">게시판</h1>
 
         <div class="board-detail-meta">
             <p><strong>작성자:</strong> <span th:text="${board.author}"></span></p>
-            <p><strong>작성일:</strong> <span th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+            <p><strong>작성일:</strong>
+            <span th:text="${T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm').format(board.createdAt)}"></span>
+            </p>
         </div>
 
         <div class="board-detail-content" th:utext="${board.content}">내용</div>
@@ -28,5 +30,7 @@
     </div>
 
     <div th:replace="footer/footer :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

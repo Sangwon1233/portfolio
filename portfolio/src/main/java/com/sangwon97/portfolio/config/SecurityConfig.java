@@ -2,6 +2,7 @@ package com.sangwon97.portfolio.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,12 +34,22 @@ public class SecurityConfig {
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**", "/api/login", "/css/**", "/js/**", "/images/**").permitAll()
-                .anyRequest().authenticated()
-            )
+            .requestMatchers(
+                "/", "/index", "/home", "/favicon.ico",
+                "/css/**", "/js/**", "/images/**",
+                "/api/login", "/api/logout",
+                "/board/list", "/board/view/**"
+            ).permitAll()
+            .requestMatchers(HttpMethod.GET, "/board/write**").authenticated()
+            .requestMatchers(HttpMethod.POST, "/board/write").authenticated()
+            .requestMatchers("/board/delete/**").authenticated()
+            .anyRequest().authenticated()
+        )
+
             .logout(logout -> logout
                 .logoutUrl("/api/logout")
-                .logoutSuccessHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK))
+                .logoutSuccessUrl("/") // ✅ 로그아웃 후 이동할 주소
+                .permitAll()
             )
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint((request, response, authException) -> {

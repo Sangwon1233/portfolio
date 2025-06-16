@@ -1,5 +1,6 @@
 package com.sangwon97.portfolio.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void save(Board board) {
+        if (board.getCreatedAt() == null) {
+            board.setCreatedAt(LocalDateTime.now());
+        }
+        board.setUpdatedAt(LocalDateTime.now());
         boardRepository.save(board);
     }
 
@@ -28,7 +33,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board getBoard(Long id) {
-        return boardRepository.findById(id).orElseThrow();
+        return boardRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다. ID: " + id));
     }
 
     @Override

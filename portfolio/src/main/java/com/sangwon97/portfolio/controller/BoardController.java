@@ -5,6 +5,8 @@ import com.sangwon97.portfolio.service.BoardService;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -58,8 +60,15 @@ public class BoardController {
     // 글 등록 처리
     @PostMapping("/write")
     public String write(@ModelAttribute Board board) {
-        boardService.save(board);
-        return "redirect:/board/list?type=" + board.getBoardType();
+    // 로그인 사용자 ID 추출
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String username = auth.getName(); // DB 아이디 username으로 바꾸기
+
+    // 작성자 직접 설정
+    board.setAuthor(username);
+
+    boardService.save(board);
+    return "redirect:/board/list?type=" + board.getBoardType();
     }
 
     // 삭제

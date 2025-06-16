@@ -32,9 +32,6 @@
             <label for="title">제목</label>
             <input type="text" id="title" name="title" required/><br/>
 
-            <label for="author">작성자</label>
-            <input type="text" id="author" name="author" required/><br/>
-
             <label for="content">내용</label>
             <textarea id="content" name="content" rows="10" cols="50" required></textarea><br/>
 
@@ -46,5 +43,7 @@
     </div>
 
     <div th:replace="footer/footer :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.sangwon97.portfolio.controller;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sangwon97.portfolio.domain.dto.LoginRequest;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -25,7 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest req) {
         try {
             UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
@@ -33,9 +38,19 @@ public class AuthController {
             Authentication authentication = authenticationManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            return ResponseEntity.ok("로그인 성공");
+            // ✅ 세션에 SecurityContext 수동 저장
+            HttpSession session = req.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+            // 🔍 로그인 시 JSESSIONID 확인
+            // System.out.println("로그인 성공 - 세션 ID: " + req.getSession().getId());
+
+            // ✅ 여기 JSON 응답으로 수정
+            return ResponseEntity.ok(Map.of("message", "로그인 성공"));
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "로그인 실패"));
         }
     }
+
 }

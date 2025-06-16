@@ -20,16 +20,19 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
-    @Lob
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Column(nullable = false)
     private String author;
 
-    @Column(name = "board_type")
+    @Column(name = "board_type", nullable = false)
     private String boardType; // "project" or "notion"
 
+    @Column(name = "sub_category") // null 허용
     private String subCategory; // notion만 사용하는 필드
 
     @CreationTimestamp

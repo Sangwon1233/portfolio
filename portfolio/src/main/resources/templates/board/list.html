@@ -33,13 +33,16 @@
                 <a th:href="@{|/board/view/${board.id}?type=${board.boardType}|}">
                     <h3 th:text="${board.title}">제목</h3>
                     <p th:text="${board.author}">작성자</p>
-                    <p th:if="${board.createdAt != null}" th:text="${#dates.format(board.createdAt, 'yyyy-MM-dd')}">작성일</p>
-                    <p th:if="${board.createdAt == null}">작성일 없음</p>
+                    <p th:if="${board.createdAt != null}"
+                    th:text="${T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd').format(board.createdAt)}">작성일</p>
+                    <!-- <p th:if="${board.createdAt == null}">작성일 없음</p> -->
                 </a>
             </div>
         </div>
     </div>
 
     <div th:replace="footer/footer :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
 </body>
 </html>
