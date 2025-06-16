@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${boardTypeDisplay} + ' 게시판 - 글쓰기'">글쓰기</title>
+    <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
+</head>
+<body>
+    <div th:replace="header/header :: header"></div>
+
+    <div class="board-page-container">
+        <h1 class="board-page-title" th:text="${boardTypeDisplay} + ' 게시판'">게시판</h1>
+        <form method="post" th:action="@{/board/write}" class="board-form">
+            <input type="hidden" name="boardType" th:value="${boardType}"/>
+
+            <div th:if="${boardType == 'notion'}">
+                <label for="subCategory">하위 카테고리</label>
+                <select id="subCategory" name="subCategory">
+                    <option value="">선택하세요</option>
+                    <option value="react">React</option>
+                    <option value="spring">Spring</option>
+                    <option value="aws">AWS</option>
+                    <option value="nginx">Nginx</option>
+                    <option value="db">DB</option>
+                    <option value="java">Java</option>
+                    <option value="docker">Docker</option>
+                    <option value="linux">Linux</option>
+                </select>
+                <br/>
+            </div>
+
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" required/><br/>
+
+            <label for="content">내용</label>
+            <textarea id="content" name="content" rows="10" cols="50" required></textarea><br/>
+
+            <div class="action-buttons">
+                <button type="submit">등록</button>
+                <a th:href="@{'/board/list'(type=${boardType})}">취소</a>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="footer/footer :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
