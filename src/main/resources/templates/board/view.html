@@ -19,7 +19,9 @@
             </p>
         </div>
 
-        <div class="board-detail-content" th:text="${board.content}"></div>
+        <div class="board-detail-content"
+            th:utext="${#strings.replace(board.content, '\n', '&lt;br/&gt;')}">
+        </div>
 
        <div class="action-buttons">
             <!-- 삭제 버튼 -->
