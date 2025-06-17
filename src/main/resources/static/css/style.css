@@ -324,7 +324,6 @@ body {
 }
 
 /* 모바일 화면 (최대 768px) */
-/* 모바일 화면 (최대 768px) */
 @media (max-width: 768px) {
     .main-container {
         width: 100%;
