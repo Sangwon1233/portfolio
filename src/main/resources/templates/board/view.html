@@ -19,10 +19,11 @@
             </p>
         </div>
 
-        <div class="board-detail-content"
-            th:utext="${#strings.replace(board.content, '\n', '<br />&#10;')}">
+        <div class="board-detail-content">
+            <textarea readonly rows="10" cols="80" th:text="${board.content}"></textarea>
         </div>
-        
+
+
         <div th:utext="${#strings.replace('첫 줄입니다\n둘째 줄입니다\n셋째줄', '\n', '<br />')}"></div>
 
 
