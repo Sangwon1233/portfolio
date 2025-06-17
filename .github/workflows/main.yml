@@ -1,0 +1,28 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/portfolio
+            git pull origin main
+            chmod +x ./gradlew
+            ./gradlew build
+            pm2 delete portfolio || true
+            pm2 start "/usr/bin/java -jar build/libs/portfolio-0.0.1-SNAPSHOT.jar" --name portfolio

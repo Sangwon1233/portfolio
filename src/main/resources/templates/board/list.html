@@ -12,7 +12,7 @@
         <h1 class="board-page-title" th:text="|${boardTypeDisplay} 게시판|">게시판</h1>
 
 
-        <a th:href="@{'/board/write'(type=${boardType})}" class="write-button">글쓰기</a>
+        <a th:href="@{'/portfolio/board/write'(type=${boardType})}" class="write-button">글쓰기</a>
 
         <div th:if="${boardType == 'notion'}" class="sub-category-buttons">
             <button onclick="location.href='?type=notion'">전체</button> <button onclick="location.href='?type=notion&subCategory=react'">React</button>
@@ -30,7 +30,7 @@
                 <p>아직 게시글이 없습니다.</p>
             </div>
             <div class="board-card-item" th:each="board : ${boards}">
-                <a th:href="@{|/board/view/${board.id}?type=${board.boardType}|}">
+                <a th:href="@{|/portfolio/board/view/${board.id}?type=${board.boardType}|}">
                     <h3 th:text="${board.title}">제목</h3>
                     <p th:text="${board.author}">작성자</p>
                     <p th:if="${board.createdAt != null}"

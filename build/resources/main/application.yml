@@ -1,0 +1,32 @@
+spring:
+  config:
+    import: optional:file:./application-secret.yml
+  
+  application:
+    name: portfolio
+
+  datasource:
+    url: jdbc:mysql://portfolio.sangwon97.com:3306/portfolio
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  thymeleaf:
+    cache: false
+
+  # 세션 쿠키가 JS fetch에서도 유지되도록 SameSite=Lax 설정
+server:
+  servlet:
+    context-path: /portfolio
+    session:
+      cookie:
+        same-site: lax
+        secure: false
+
+

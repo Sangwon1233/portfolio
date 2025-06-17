@@ -35,7 +35,7 @@ public class SecurityConfig {
             .httpBasic(basic -> basic.disable())
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
-                "/", "/index", "/home", "/favicon.ico",
+                "/","/portfolio/**", "/index", "/home", "/favicon.ico",
                 "/css/**", "/js/**", "/images/**",
                 "/api/login", "/api/logout",
                 "/board/list", "/board/view/**"
