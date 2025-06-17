@@ -20,8 +20,9 @@
         </div>
 
         <div class="board-detail-content"
-            th:utext="${#strings.replace(board.content, '\n', '<br />')}">
+            th:utext="${#strings.replace(board.content, '\n', '<br />&#10;')}">
         </div>
+        
         <div th:utext="${#strings.replace('첫 줄입니다\n둘째 줄입니다\n셋째줄', '\n', '<br />')}"></div>
 
 
