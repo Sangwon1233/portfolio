@@ -20,8 +20,9 @@
         </div>
 
         <div class="board-detail-content"
-            th:utext="${#strings.replace(board.content, '\n', '&lt;br/&gt;')}">
+            th:utext="${#strings.replace(board.content, '\n', '<br />')}">
         </div>
+
 
        <div class="action-buttons">
             <!-- 삭제 버튼 -->
