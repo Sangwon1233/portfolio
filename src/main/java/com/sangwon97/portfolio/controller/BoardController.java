@@ -49,7 +49,14 @@ public class BoardController {
     // 게시글 상세
     @GetMapping("/view/{id}")
     public String view(@PathVariable Long id, String type, Model model) {
-        model.addAttribute("board", boardService.getBoard(id));
+
+    Board board = boardService.getBoard(id);
+    model.addAttribute("board", board);
+
+    // type이 null일 경우 board에서 직접 꺼내도록 수정
+    if (type == null) {
+        type = board.getBoardType();
+    }
 
         String displayName = switch (type) {
             case "notion" -> "메모";

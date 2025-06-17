@@ -25,7 +25,7 @@
                     <h2>프로젝트 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentProjects}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                     </ul>
                     <a th:href="@{/board/list(type='project')}" class="view-all-link">▶ 전체 보기</a>
@@ -35,7 +35,7 @@
                     <h2>개인 메모 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentNotions}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                     </ul>
                     <a th:href="@{/board/list(type='notion')}" class="view-all-link">▶ 전체 보기</a>
@@ -52,7 +52,7 @@
                     <h2>회사 이슈 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentCompanyIssues}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                         <li th:if="${recentCompanyIssues == null or recentCompanyIssues.isEmpty()}">
                             <span>아직 게시글이 없습니다.</span>
@@ -66,7 +66,7 @@
                     <h2>아이디어 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentIdeas}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                         <li th:if="${recentIdeas == null or recentIdeas.isEmpty()}">
                             <span>아직 게시글이 없습니다.</span>
