@@ -324,6 +324,7 @@ body {
 }
 
 /* 모바일 화면 (최대 768px) */
+/* 모바일 화면 (최대 768px) */
 @media (max-width: 768px) {
     .main-container {
         width: 100%;
@@ -344,12 +345,24 @@ body {
         padding-bottom: 15px;
     }
 
-    .visitor-count {
-        margin-bottom: 15px;
-    }
-
     .main-content-cards {
         grid-template-columns: 1fr !important;
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        gap: 15px;
+    }
+
+    .board-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .visitor-count {
+        margin-bottom: 15px;
     }
 
     .main-header h1 {
@@ -373,6 +386,7 @@ body {
         font-size: 30px;
     }
 }
+
 
 /* 초소형 모바일 (최대 480px 이하) */
 @media (max-width: 480px) {
