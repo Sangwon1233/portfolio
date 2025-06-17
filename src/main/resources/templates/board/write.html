@@ -10,7 +10,7 @@
 
     <div class="board-page-container">
         <h1 class="board-page-title" th:text="${boardTypeDisplay} + ' 게시판'">게시판</h1>
-        <form method="post" th:action="@{/portfolio/board/write}" class="board-form">
+        <form method="post" th:action="@{/board/write}" class="board-form">
             <input type="hidden" name="boardType" th:value="${boardType}"/>
 
             <div th:if="${boardType == 'notion'}">
@@ -37,7 +37,7 @@
 
             <div class="action-buttons">
                 <button type="submit">등록</button>
-                <a th:href="@{'/portfolio/board/list'(type=${boardType})}">취소</a>
+                <a th:href="@{'/board/list'(type=${boardType})}">취소</a>
             </div>
         </form>
     </div>
