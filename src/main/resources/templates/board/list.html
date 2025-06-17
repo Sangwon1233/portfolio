@@ -30,7 +30,7 @@
                 <p>아직 게시글이 없습니다.</p>
             </div>
             <div class="board-card-item" th:each="board : ${boards}">
-                <a th:href="@{/board/view/{id}(id=${board.id}) + '?type=' + ${board.boardType}}">
+                <a th:href="@{/board/view/{id}(id=${board.id}, type=${board.boardType})}">
                     <h3 th:text="${board.title}">제목</h3>
                     <p th:text="${board.author}">작성자</p>
                     <p th:if="${board.createdAt != null}"
