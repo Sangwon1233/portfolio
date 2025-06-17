@@ -21,11 +21,12 @@
         <div class="board-detail-content" th:utext="${board.content}">내용</div>
 
         <div class="action-buttons">
-            <form th:action="@{'/portfolio/board/write'}" method="post">
-                <input type="hidden" name="type" th:value="${board.boardType}"/>
+            <form th:action="@{'/board/delete/' + ${board.id}}" method="post">
+                <input type="hidden" name="type" th:value="${board.boardType}" />
                 <button type="submit">삭제</button>
             </form>
-            <a th:href="@{'/portfolio/board/list'(type=${board.boardType})}">목록으로</a>
+            <a th:href="@{/board/list(type=${board.boardType})}">목록으로</a>
+
         </div>
     </div>
 

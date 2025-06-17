@@ -23,7 +23,7 @@ spring:
   # 세션 쿠키가 JS fetch에서도 유지되도록 SameSite=Lax 설정
 server:
   servlet:
-    context-path: /portfolio/
+    context-path: /
     session:
       cookie:
         same-site: lax
