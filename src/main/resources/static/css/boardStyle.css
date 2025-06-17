@@ -481,6 +481,8 @@ body {
     padding: 20px 0;
     border-bottom: 1px dashed #eee;
     margin-bottom: 30px;
+    white-space: pre-line;
+    line-height: 1.6;
 }
 
 /* 상세 보기 및 글쓰기 페이지 버튼 */
