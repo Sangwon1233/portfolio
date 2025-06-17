@@ -332,12 +332,13 @@ body {
     }
 
     .content-wrapper {
-        flex-direction: column;
+        flex-direction: column !important;
+        display: flex;
         gap: 15px;
     }
 
     .profile-sidebar {
-        width: auto;
+        width: 100% !important;
         margin-bottom: 0;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -348,7 +349,7 @@ body {
     }
 
     .main-content-cards {
-        grid-template-columns: 1fr; /* 모바일에서는 1개씩 배치 */
+        grid-template-columns: 1fr !important;
     }
 
     .main-header h1 {
@@ -372,6 +373,7 @@ body {
         font-size: 30px;
     }
 }
+
 /* 초소형 모바일 (최대 480px 이하) */
 @media (max-width: 480px) {
     .board-card {
