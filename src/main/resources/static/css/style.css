@@ -40,10 +40,9 @@ body {
 
 /* 전체 컨테이너 */
 .main-container {
-    width: 100%; /* ✅ 화면에 꽉 차도록 변경 */
-    /* max-width: 1200px; 제거 */
-    margin: 20px auto;
-    padding: 0 20px; /* 좌우 패딩 유지하여 내용이 가장자리에 붙지 않도록 */
+    max-width: 1200px; /* ✅ 큰 화면에서는 최대 너비 제한 */
+    margin: 20px auto; /* 중앙 정렬 */
+    padding: 0 20px; /* 좌우 패딩 */
 }
 
 /* 프로필 사이드바와 메인 콘텐츠를 감싸는 컨테이너 */
@@ -325,7 +324,9 @@ body {
 /* 모바일 화면 (최대 768px) */
 @media (max-width: 768px) {
     .main-container {
+        width: 100%; /* ✅ 제일 작은 화면에서만 꽉 차도록 */
         padding: 0 10px; /* 모바일에서도 좌우 패딩 유지 */
+        margin: 20px 0; /* 좌우 마진 제거 (꽉 차게) */
     }
 
     .content-wrapper {
