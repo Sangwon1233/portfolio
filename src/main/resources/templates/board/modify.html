@@ -38,7 +38,7 @@
 
             <div class="action-buttons">
                 <a th:href="@{'/board/view/' + ${board.id}}">취소</a>
-                <span sec:authorize="isAuthenticated()">
+                <span th:if="${#authentication.name == board.author}">
                     <button type="submit">수정</button>
                 </span>
             </div>
