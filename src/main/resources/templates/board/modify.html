@@ -40,7 +40,7 @@
             <div class="action-buttons">
                 <a th:href="@{'/board/view/' + ${board.id}}">취소</a>
                 <span sec:authorize="isAuthenticated()">
-                    <a th:href="@{'/board/modify/' + ${board.id}}">수정</a>
+                    <button type="submit">수정</button>
                 </span>
             </div>
 
