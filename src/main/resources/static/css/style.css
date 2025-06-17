@@ -40,16 +40,17 @@ body {
 
 /* 전체 컨테이너 */
 .main-container {
-    max-width: 1200px;
+    width: 100%; /* ✅ 화면에 꽉 차도록 변경 */
+    /* max-width: 1200px; 제거 */
     margin: 20px auto;
-    padding: 0 20px;
+    padding: 0 20px; /* 좌우 패딩 유지하여 내용이 가장자리에 붙지 않도록 */
 }
 
 /* 프로필 사이드바와 메인 콘텐츠를 감싸는 컨테이너 */
 .content-wrapper {
     display: flex;
     gap: 20px;
-    align-items: flex-start; /* 프로필과 카드를 상단에 맞춰 정렬 */
+    align-items: flex-start;
 }
 
 /* 프로필 사이드바 */
@@ -59,12 +60,12 @@ body {
     text-align: center;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 그림자 강화 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-top: 3px solid #007bff; /* 상단 선 추가 */
+    border-top: 3px solid #007bff;
 }
 
 /* 방문자 수 */
@@ -102,7 +103,7 @@ body {
 .main-content-cards {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* ✅ 기본값: 큰 화면에서는 가로 3개씩 배치 */
+    grid-template-columns: repeat(3, 1fr); /* 큰 화면: 3개 */
     gap: 20px;
     padding: 0;
 }
@@ -112,18 +113,18 @@ body {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 그림자 강화 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* 호버 효과 부드럽게 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     border-bottom: 3px solid #007bff;
-    border-top: 3px solid #007bff; /* 상단 선 추가 */
+    border-top: 3px solid #007bff;
 }
 
 .board-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15); /* 호버 시 그림자 더 강화 */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .board-card h2 {
@@ -203,7 +204,7 @@ body {
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    border-top: 3px solid #007bff; /* 상단 선 추가 */
+    border-top: 3px solid #007bff;
 }
 
 .github-card:hover {
@@ -317,14 +318,14 @@ body {
 /* 태블릿 및 중간 크기 화면 (최대 1024px) */
 @media (max-width: 1024px) {
     .main-content-cards {
-        grid-template-columns: repeat(2, 1fr); /* ✅ 2개씩 배치 */
+        grid-template-columns: repeat(2, 1fr); /* 2개씩 배치 */
     }
 }
 
 /* 모바일 화면 (최대 768px) */
 @media (max-width: 768px) {
     .main-container {
-        padding: 0 10px;
+        padding: 0 10px; /* 모바일에서도 좌우 패딩 유지 */
     }
 
     .content-wrapper {
@@ -344,7 +345,7 @@ body {
     }
 
     .main-content-cards {
-        grid-template-columns: 1fr; /* ✅ 모바일에서는 1개씩 배치 (크게) */
+        grid-template-columns: 1fr; /* 모바일에서는 1개씩 배치 (크게) */
     }
 
     .main-header h1 {
