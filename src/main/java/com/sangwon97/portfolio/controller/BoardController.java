@@ -54,6 +54,15 @@ public class BoardController {
     @GetMapping("/write")
     public String writeForm(@RequestParam String type, Model model) {
         model.addAttribute("boardType", type);
+
+        String displayName = switch (type) {
+        case "notion" -> "메모";
+        case "project" -> "프로젝트";
+        case "company-issue" -> "회사 이슈";
+        case "ideas" -> "아이디어";
+        default -> type;
+    };
+    model.addAttribute("boardTypeDisplay", displayName);
         return "board/write";
     }
 
