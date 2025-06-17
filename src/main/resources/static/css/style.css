@@ -372,3 +372,35 @@ body {
         font-size: 30px;
     }
 }
+/* 초소형 모바일 (최대 480px 이하) */
+@media (max-width: 480px) {
+    .board-card {
+        padding: 15px;
+    }
+
+    .board-card h2 {
+        font-size: 18px;
+    }
+
+    .post-list a {
+        font-size: 14px;
+    }
+
+    .main-header h1 {
+        font-size: 20px;
+    }
+
+    .login-button {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    .github-icon {
+        font-size: 26px;
+    }
+
+    .view-all-link {
+        text-align: center;
+        font-size: 14px;
+    }
+}
