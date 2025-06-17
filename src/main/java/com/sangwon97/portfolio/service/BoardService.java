@@ -10,5 +10,8 @@ public interface BoardService {
     Board getBoard(Long id);
     List<Board> getBoards(String type);
     List<Board> getBoards(String type, String subCategory);
+    Board update(Long id, Board updatedBoard);
+
+    
 
 }

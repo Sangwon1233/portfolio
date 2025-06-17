@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+</html>
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${boardTypeDisplay} + ' 게시판 - 수정'">글 수정</title>
+    <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
+</head>
+<body>
+    <div th:replace="header/header :: header"></div>
+
+    <div class="board-page-container">
+        <h1 class="board-page-title" th:text="${boardTypeDisplay} + ' 게시판'">게시판</h1>
+        <form method="post" th:action="@{'/board/modify/' + ${board.id}}" class="board-form">
+            <input type="hidden" name="boardType" th:value="${boardType}" />
+
+            <div th:if="${boardType == 'notion'}">
+                <label for="subCategory">하위 카테고리</label>
+                <select id="subCategory" name="subCategory">
+                    <option value="">선택하세요</option>
+                    <option value="react" th:selected="${board.subCategory == 'react'}">React</option>
+                    <option value="spring" th:selected="${board.subCategory == 'spring'}">Spring</option>
+                    <option value="aws" th:selected="${board.subCategory == 'aws'}">AWS</option>
+                    <option value="nginx" th:selected="${board.subCategory == 'nginx'}">Nginx</option>
+                    <option value="db" th:selected="${board.subCategory == 'db'}">DB</option>
+                    <option value="java" th:selected="${board.subCategory == 'java'}">Java</option>
+                    <option value="docker" th:selected="${board.subCategory == 'docker'}">Docker</option>
+                    <option value="linux" th:selected="${board.subCategory == 'linux'}">Linux</option>
+                </select>
+                <br/>
+            </div>
+
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" th:value="${board.title}" required/><br/>
+
+            <label for="content">내용</label>
+            <textarea id="content" name="content" rows="10" cols="50" th:text="${board.content}" required></textarea><br/>
+
+            <div class="action-buttons">
+                <a th:href="@{'/board/view/' + ${board.id}}">취소</a>
+                <span sec:authorize="isAuthenticated()">
+                    <a th:href="@{'/board/modify/' + ${board.id}}">수정</a>
+                </span>
+            </div>
+
+        </form>
+    </div>
+
+    <div th:replace="footer/footer :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

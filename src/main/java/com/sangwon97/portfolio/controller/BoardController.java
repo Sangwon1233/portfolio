@@ -86,7 +86,18 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/list?type=" + type;
     }
-
-    
+    //페이지 맵핑
+    @GetMapping("/modify/{id}")
+    public String showModifyForm(@PathVariable Long id, Model model) {
+        Board board = boardService.getBoard(id);
+        model.addAttribute("board", board);
+        return "board/modify"; // board/modify.html
+    }
+    //페이지 처리
+    @PostMapping("/modify/{id}")
+    public String modify(@PathVariable Long id, @ModelAttribute Board updatedBoard) {
+        boardService.update(id, updatedBoard);
+        return "redirect:/board/view/" + id + "?type=" + updatedBoard.getBoardType();
+    }
    
 }

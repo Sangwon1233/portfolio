@@ -49,5 +49,15 @@ public class BoardServiceImpl implements BoardService {
         }
         return getBoards(type);
     }
+
+    @Override
+    public Board update(Long id, Board updatedBoard) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("게시글 없음"));
+        board.setTitle(updatedBoard.getTitle());
+        board.setContent(updatedBoard.getContent());
+        board.setUpdatedAt(LocalDateTime.now());
+        return boardRepository.save(board); // ✅ 저장 후 리턴
+    }
+
     
 }
