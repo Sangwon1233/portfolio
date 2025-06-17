@@ -3,8 +3,11 @@ package com.sangwon97.portfolio.controller;
 import com.sangwon97.portfolio.domain.entity.Board;
 import com.sangwon97.portfolio.service.BoardService;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -104,9 +107,20 @@ public class BoardController {
     }
     //페이지 처리
     @PostMapping("/modify/{id}")
-    public String modify(@PathVariable Long id, @ModelAttribute Board updatedBoard) {
-        boardService.update(id, updatedBoard);
-        return "redirect:/board/view/" + id + "?type=" + updatedBoard.getBoardType();
+    public String modifySubmit(@PathVariable Long id, @ModelAttribute Board board, Principal principal) {
+        Board original = boardService.getBoard(id);
+
+        if (!original.getAuthor().equals(principal.getName())) {
+            throw new AccessDeniedException("수정 권한이 없습니다.");
+        }
+
+        original.setTitle(board.getTitle());
+        original.setContent(board.getContent());
+        original.setSubCategory(board.getSubCategory());
+        original.setUpdatedAt(LocalDateTime.now());
+
+        boardService.save(original);
+        return "redirect:/board/view/" + id;
     }
    
 }
