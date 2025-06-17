@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
 <head>
     <meta charset="UTF-8">
     <title th:text="${board.title}">상세보기</title>
@@ -21,9 +22,10 @@
         <div class="board-detail-content" th:utext="${board.content}">내용</div>
 
        <div class="action-buttons">
-            <form th:action="@{'/board/delete/' + ${board.id}}" method="post">
-                <input type="hidden" name="type" th:value="${board.boardType}"/>
-                <button type="submit">삭제</button>
+            <form th:action="@{/board/delete/{id}(id=${board.id}, type=${board.boardType})}" method="post">
+                <sec:authorize access="isAuthenticated()">
+                    <button type="submit">삭제</button>
+                </sec:authorize>
             </form>
             <a th:href="@{'/board/list'(type=${board.boardType})}">목록으로</a>
         </div>
