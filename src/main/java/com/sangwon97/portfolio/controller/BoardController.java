@@ -45,8 +45,17 @@ public class BoardController {
 
     // 게시글 상세
     @GetMapping("/view/{id}")
-    public String view(@PathVariable Long id, Model model) {
+    public String view(@PathVariable Long id, String type, Model model) {
         model.addAttribute("board", boardService.getBoard(id));
+
+        String displayName = switch (type) {
+            case "notion" -> "메모";
+            case "project" -> "프로젝트";
+            case "company-issue" -> "회사 이슈";
+            case "ideas" -> "아이디어";
+            default -> type;
+        };
+        model.addAttribute("boardTypeDisplay", displayName);
         return "board/view";
     }
 
