@@ -54,8 +54,11 @@ public class BoardController {
     model.addAttribute("board", board);
 
     // 줄바꿈 문자 추가
-    String nlString = System.getProperty("line.separator");
-    model.addAttribute("nlString", nlString);
+    String converted = board.getContent()
+    .replaceAll("\r\n", "<br />")
+    .replaceAll("\n", "<br />");
+    board.setContent(converted);
+    model.addAttribute("board", board);
 
     // type이 null일 경우 board에서 직접 꺼내도록 수정
     if (type == null) {
