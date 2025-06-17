@@ -40,9 +40,9 @@ body {
 
 /* 전체 컨테이너 */
 .main-container {
-    max-width: 1200px; /* ✅ 큰 화면에서는 최대 너비 제한 */
-    margin: 20px auto; /* 중앙 정렬 */
-    padding: 0 20px; /* 좌우 패딩 */
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
 /* 프로필 사이드바와 메인 콘텐츠를 감싸는 컨테이너 */
@@ -105,6 +105,8 @@ body {
     grid-template-columns: repeat(3, 1fr); /* 큰 화면: 3개 */
     gap: 20px;
     padding: 0;
+    min-width: 0; /* ✅ 추가: flex 아이템이 내용보다 작아지지 않도록 */
+    flex-shrink: 0; /* ✅ 추가: flex 아이템이 축소되지 않도록 (flex: 1과 함께 사용 시 중요) */
 }
 
 /* 게시판 카드 스타일 */
@@ -324,18 +326,18 @@ body {
 /* 모바일 화면 (최대 768px) */
 @media (max-width: 768px) {
     .main-container {
-        width: 100%; /* ✅ 제일 작은 화면에서만 꽉 차도록 */
-        padding: 0 10px; /* 모바일에서도 좌우 패딩 유지 */
-        margin: 20px 0; /* 좌우 마진 제거 (꽉 차게) */
+        width: 100%;
+        padding: 0 10px;
+        margin: 20px 0;
     }
 
     .content-wrapper {
-        flex-direction: column; /* 세로로 정렬 */
+        flex-direction: column;
         gap: 15px;
     }
 
     .profile-sidebar {
-        width: auto; /* 너비 자동 */
+        width: auto;
         margin-bottom: 0;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -346,7 +348,7 @@ body {
     }
 
     .main-content-cards {
-        grid-template-columns: 1fr; /* 모바일에서는 1개씩 배치 (크게) */
+        grid-template-columns: 1fr; /* 모바일에서는 1개씩 배치 */
     }
 
     .main-header h1 {
