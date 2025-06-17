@@ -53,6 +53,10 @@ public class BoardController {
     Board board = boardService.getBoard(id);
     model.addAttribute("board", board);
 
+    // 줄바꿈 문자 추가
+    String nlString = System.getProperty("line.separator");
+    model.addAttribute("nlString", nlString);
+
     // type이 null일 경우 board에서 직접 꺼내도록 수정
     if (type == null) {
         type = board.getBoardType();

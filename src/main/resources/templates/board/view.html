@@ -20,7 +20,7 @@
         </div>
 
         <div class="board-detail-content"
-           <div th:inline="none" th:utext="${#strings.replace(board.content, '\n', '<br />')}"></div>
+            th:utext="${#strings.replace(board.content, nlString, '<br />')}">
         </div>
 
 
