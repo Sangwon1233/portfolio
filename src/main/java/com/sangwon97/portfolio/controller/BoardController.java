@@ -53,13 +53,6 @@ public class BoardController {
     Board board = boardService.getBoard(id);
     model.addAttribute("board", board);
 
-    // 줄바꿈 문자 추가
-    String converted = board.getContent()
-    .replaceAll("\r\n", "<br />")
-    .replaceAll("\n", "<br />");
-    board.setContent(converted);
-    model.addAttribute("board", board);
-
     // type이 null일 경우 board에서 직접 꺼내도록 수정
     if (type == null) {
         type = board.getBoardType();
