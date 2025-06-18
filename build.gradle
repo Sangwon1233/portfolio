@@ -39,6 +39,12 @@ dependencies {
 	//타임리프 의존성
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
+	//jsoup
+	implementation 'org.jsoup:jsoup:1.17.2'
+
+	//cloudinary
+	implementation 'com.cloudinary:cloudinary-http44:1.33.0'
+
 }
 
 tasks.named('test') {
