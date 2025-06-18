@@ -15,7 +15,7 @@
         <div class="content-wrapper">
             <aside class="profile-sidebar">
                 <p class="visitor-count"> 오늘 방문자 수: <span th:text="${todayCount}"></span>명</p>
-                <img src="/images/sangwon.jpg" alt="프로필" class="profile-image">
+                <img src="/portfolio/images/sangwon.jpg" alt="프로필" class="profile-image">
                 <h3 class="profile-name">이상원</h3>
                 <p class="profile-birthyear">1997년생</p>
             </aside>
@@ -25,20 +25,20 @@
                     <h2>프로젝트 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentProjects}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                     </ul>
-                    <a href="/board/list?type=project" class="view-all-link">▶ 전체 보기</a>
+                    <a th:href="@{/board/list(type='project')}" class="view-all-link">▶ 전체 보기</a>
                 </section>
                 
                 <section class="board-card">
                     <h2>개인 메모 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentNotions}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                     </ul>
-                    <a href="/board/list?type=notion" class="view-all-link">▶ 전체 보기</a>
+                    <a th:href="@{/board/list(type='notion')}" class="view-all-link">▶ 전체 보기</a>
                 </section>
 
                 <section class="board-card github-card" onclick="window.open('https://github.com/Sangwon1233', '_blank');">
@@ -52,7 +52,7 @@
                     <h2>회사 이슈 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentCompanyIssues}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                         <li th:if="${recentCompanyIssues == null or recentCompanyIssues.isEmpty()}">
                             <span>아직 게시글이 없습니다.</span>
@@ -66,7 +66,7 @@
                     <h2>아이디어 </h2>
                     <ul class="post-list">
                         <li th:each="post : ${recentIdeas}">
-                            <a th:href="@{/board/view/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+                            <a th:href="@{/board/view/{id}(id=${post.id}, type=${post.boardType})}" th:text="${post.title}">게시글 제목</a>
                         </li>
                         <li th:if="${recentIdeas == null or recentIdeas.isEmpty()}">
                             <span>아직 게시글이 없습니다.</span>

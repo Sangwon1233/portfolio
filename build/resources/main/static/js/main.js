@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ▶ 로그인 버튼 클릭 시 API 호출 (전역 함수 등록)
     window.submitLogin = function () {
-        fetch("/api/login", {
+        fetch("/portfolio/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

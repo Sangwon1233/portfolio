@@ -1,7 +1,7 @@
 spring:
   config:
-    import: optional:file:./application-secret.yml
-  
+    import: classpath:application-secret.yml
+
   application:
     name: portfolio
 

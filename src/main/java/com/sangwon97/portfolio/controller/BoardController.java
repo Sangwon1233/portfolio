@@ -51,6 +51,8 @@ public class BoardController {
     public String view(@PathVariable Long id, String type, Model model) {
 
     Board board = boardService.getBoard(id);
+    //test log
+    System.out.println("내용 확인: [" + board.getContent() + "]");
     model.addAttribute("board", board);
 
     // type이 null일 경우 board에서 직접 꺼내도록 수정
