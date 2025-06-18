@@ -37,6 +37,9 @@
             <div id="editor" style="height: 300px;"></div>
             <input type="hidden" id="content" name="content" th:value="${board.content}" />
 
+            <!-- 서버 초기 데이터 js로 넘겨주기 -->
+            <input type="hidden" id="initialContent" th:value="${board.content}" />
+
             <div class="action-buttons">
                 <a th:href="@{'/board/view/' + ${board.id}}">취소</a>
                 <span th:if="${#authentication.name == board.author}">
@@ -51,6 +54,9 @@
 
     <script th:src="@{/js/main.js}"></script>
 
-    <script th:src="@{/js/quill.js}"></script>
+    <!-- cdn 호출 -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script th:src="@{/js/quill_modify.js}"></script>
 </body>
 </html>
