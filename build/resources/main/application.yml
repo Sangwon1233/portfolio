@@ -1,6 +1,6 @@
 spring:
   config:
-    import: classpath:application-secret.yml
+    import: optional:classpath:application-secret.yml
 
   application:
     name: portfolio
@@ -19,11 +19,6 @@ spring:
 
   thymeleaf:
     cache: false
-
-  cloudinary:
-    cloud_name: ${CLOUDINARY_CLOUD_NAME}
-    api_key: ${CLOUDINARY_API_KEY}
-    api_secret: ${CLOUDINARY_API_SECRET}
 
   # 세션 쿠키가 JS fetch에서도 유지되도록 SameSite=Lax 설정
 server:
