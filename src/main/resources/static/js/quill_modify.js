@@ -54,3 +54,5 @@ function submitModify() {
     const content = document.querySelector('input[name=content]');
     content.value = quill.root.innerHTML;
 }
+
+document.querySelector('form').addEventListener('submit', submitModify);
