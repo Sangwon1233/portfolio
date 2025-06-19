@@ -48,4 +48,4 @@ function submitForm() {
     content.value = quill.root.innerHTML;
 }
 
-document.querySelector('form').addEventListener('submit', submitForm);
+document.querySelector('.board-form').addEventListener('submit', submitForm);

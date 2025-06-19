@@ -55,4 +55,4 @@ function submitModify() {
     content.value = quill.root.innerHTML;
 }
 
-document.querySelector('form').addEventListener('submit', submitModify);
+document.querySelector('.board-form').addEventListener('submit', submitModify);
