@@ -1,0 +1,27 @@
+# 빌드 결과물
+/build/
+/out/
+/target/
+/bin/
+/.gradle/
+
+# IDE 관련 (IntelliJ, Eclipse 등)
+*.iml
+.idea/
+.vscode/
+
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 로그 파일
+*.log
+
+# 기타 임시 파일
+*.class
+
+# 민감 파일
+application-secret.yml
+
+#키
+devtools.pem
