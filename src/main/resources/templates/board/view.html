@@ -25,7 +25,7 @@
         
 
         <div class="action-buttons">
-            <sec:authorize access="isAuthenticated() and #authentication.name == board.author">
+            <sec:authorize access="isAuthenticated() and authentication.principal.username == board.author">
                 <form method="post" th:action="@{'/board/delete/' + ${board.id}}" style="display:inline;">
                     <input type="hidden" name="type" th:value="${board.boardType}" />
                     <button type="submit">삭제</button>
@@ -36,10 +36,6 @@
 
             <a th:href="@{'/board/list'(type=${board.boardType})}">목록으로</a>
         </div>
-
-
-
-
 
     </div>
 
