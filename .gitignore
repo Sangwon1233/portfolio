@@ -1,9 +1,8 @@
 # 빌드 결과물
-/build/
+build/
 /out/
 /target/
 /bin/
-/.gradle/
 .gradle/
 
 # IDE 관련 (IntelliJ, Eclipse 등)
