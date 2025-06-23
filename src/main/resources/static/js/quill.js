@@ -1,3 +1,5 @@
+Quill.register('modules/autoLinks', quillAutoLinks.default);
+
 // Quill 에디터 초기화
 const quill = new Quill('#editor', {
     theme: 'snow',
@@ -13,14 +15,16 @@ const quill = new Quill('#editor', {
             handlers: {
                 image: imageHandler
             }
-        }
+        },
+        autoLinks: true  // 🔥 자동 링크 모듈 활성화
     }
 });
-// 커스텀 이미지 핸들러
+
+// 이미지 핸들러
 function imageHandler() {
     const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
+    input.type = 'file';
+    input.accept = 'image/*';
     input.click();
     input.onchange = async () => {
         const file = input.files[0];
@@ -44,6 +48,7 @@ function imageHandler() {
         }
     };
 }
+
 // submit 시 content 안에 HTML 저장
 function submitForm() {
     const content = document.querySelector('input[name=content]');
