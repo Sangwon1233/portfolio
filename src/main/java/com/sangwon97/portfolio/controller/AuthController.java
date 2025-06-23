@@ -38,19 +38,9 @@ public class AuthController {
             Authentication authentication = authenticationManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // UsernamePasswordAuthenticationToken newAuth =
-            //     new UsernamePasswordAuthenticationToken(
-            //         principalForThymeleaf,    
-            //         null,
-            //         authentication.getAuthorities()
-            //     );
-            // SecurityContextHolder.getContext().setAuthentication(newAuth);
-
             // ✅ 세션에 SecurityContext 수동 저장
             HttpSession session = req.getSession(true);
             session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-            // 🔍 로그인 시 JSESSIONID 확인
-            // System.out.println("로그인 성공 - 세션 ID: " + req.getSession().getId());
 
             // ✅ 여기 JSON 응답으로 수정
             return ResponseEntity.ok(Map.of("message", "로그인 성공"));

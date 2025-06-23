@@ -37,7 +37,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
-            .securityContext(securityContext -> securityContext.requireExplicitSave(false))//security 추가
+            .securityContext(context -> context.requireExplicitSave(false))
             .addFilterBefore(new XssFilter(), UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
             .requestMatchers(
