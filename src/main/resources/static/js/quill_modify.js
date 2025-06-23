@@ -34,12 +34,14 @@ function imageHandler() {
             const formData = new FormData();
             formData.append('file', file);
             try {
-                const response = await fetch('/api/upload/image', {
+                const response = await fetch('/api/image/upload', {
                     method: 'POST',
                     body: formData
                 });
+                if (!response.ok) throw new Error('Upload failed');
                 const data = await response.json();
-                const imageUrl = data.url;
+
+                const imageUrl = data.imageUrl;
                 const range = quill.getSelection();
                 quill.insertEmbed(range.index, 'image', imageUrl);
             } catch (err) {

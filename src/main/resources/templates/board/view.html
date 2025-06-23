@@ -25,16 +25,15 @@
         
 
        <div class="action-buttons">
-            <!-- 삭제 버튼 -->
-            <form method="post" th:action="@{'/board/delete/' + ${board.id}}" style="display:inline;">
-                <input type="hidden" name="type" th:value="${board.boardType}" />
-                <button type="submit">삭제</button>
-            </form>
-            <!-- 수정 버튼 -->
-            <a th:href="@{'/board/modify/' + ${board.id}}"
-            th:if="${#authentication.name == board.author}">수정</a>
+            <sec:authorize access="isAuthenticated() and #authentication.name == board.author">
+                <form method="post" th:action="@{'/board/delete/' + ${board.id}}" style="display:inline;">
+                    <input type="hidden" name="type" th:value="${board.boardType}" />
+                    <button type="submit">삭제</button>
+                </form>
 
-            <!-- 목록으로 -->
+                <a th:href="@{'/board/modify/' + ${board.id}}">수정</a>
+            </sec:authorize>
+
             <a th:href="@{'/board/list'(type=${board.boardType})}">목록으로</a>
         </div>
     </div>
