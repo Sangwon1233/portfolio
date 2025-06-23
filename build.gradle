@@ -28,7 +28,7 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.33'
 
 	//암호화 의존성
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
 	//Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.26'
