@@ -4,6 +4,7 @@
 /target/
 /bin/
 /.gradle/
+.gradle/
 
 # IDE 관련 (IntelliJ, Eclipse 등)
 *.iml
