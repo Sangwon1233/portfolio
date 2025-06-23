@@ -1,7 +1,7 @@
 <div th:fragment="header">
     <header class="main-header">
           <!-- 제목 클릭 시 홈으로 이동 -->
-        <h1><a href="/portfolio/" style="text-decoration: none; color: inherit;">이상원 포트폴리오(누르면 초기화면으로 감)</a></h1>
+        <h1><a href="/portfolio/" style="text-decoration: none; color: inherit;">이상원 포트폴리오(초기화면)</a></h1>
 
         <!-- 로그인 안한 사용자만 로그인 버튼 보임 -->
         <div th:if="${#authorization.expression('!isAuthenticated()')}">
