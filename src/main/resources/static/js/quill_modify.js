@@ -17,6 +17,9 @@ const quill = new Quill('#editor', {
     }
 });
 
+// 자동 하이퍼링크 기능 활성화
+enableAutoLink(quill);
+
 // 서버에서 불러온 기존 content 삽입
 const initialContent = document.getElementById("initialContent").value;
 quill.root.innerHTML = initialContent;
