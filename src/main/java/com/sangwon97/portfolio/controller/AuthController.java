@@ -38,13 +38,13 @@ public class AuthController {
             Authentication authentication = authenticationManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            UsernamePasswordAuthenticationToken newAuth =
-                new UsernamePasswordAuthenticationToken(
-                    request.getUsername(),  // 이게 board.author 와 동일한 값이어야 함
-                    null,
-                    authentication.getAuthorities()
-                );
-            SecurityContextHolder.getContext().setAuthentication(newAuth);
+            // UsernamePasswordAuthenticationToken newAuth =
+            //     new UsernamePasswordAuthenticationToken(
+            //         principalForThymeleaf,    
+            //         null,
+            //         authentication.getAuthorities()
+            //     );
+            // SecurityContextHolder.getContext().setAuthentication(newAuth);
 
             // ✅ 세션에 SecurityContext 수동 저장
             HttpSession session = req.getSession(true);
