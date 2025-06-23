@@ -2,11 +2,16 @@ package com.sangwon97.portfolio.controller;
 
 import com.sangwon97.portfolio.domain.entity.Board;
 import com.sangwon97.portfolio.service.BoardService;
+import com.sangwon97.portfolio.util.AutoLinkUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,33 +77,20 @@ public class BoardController {
     }
 
     // 글쓰기 폼
-    @GetMapping("/write")
-    public String writeForm(@RequestParam String type, Model model) {
-        model.addAttribute("boardType", type);
-
-        String displayName = switch (type) {
-        case "notion" -> "메모";
-        case "project" -> "프로젝트";
-        case "company-issue" -> "회사 이슈";
-        case "ideas" -> "아이디어";
-        default -> type;
-    };
-    model.addAttribute("boardTypeDisplay", displayName);
-        return "board/write";
-    }
-
-    // 글 등록 처리
     @PostMapping("/write")
-    public String write(@ModelAttribute Board board) {
-    // 로그인 사용자 ID 추출
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String username = auth.getName(); // DB 아이디 username으로 바꾸기
+    public String write(@ModelAttribute Board board, HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        board.setAuthor(username);
 
-    // 작성자 직접 설정
-    board.setAuthor(username);
+        // 🔥 AutoLink + Sanitize 적용
+        String rawContent = request.getParameter("content");
+        String linkedContent = AutoLinkUtil.convertUrlsToLinks(rawContent);
+        String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
+        board.setContent(cleanContent);
 
-    boardService.save(board);
-    return "redirect:/board/list?type=" + board.getBoardType();
+        boardService.save(board);
+        return "redirect:/board/list?type=" + board.getBoardType();
     }
 
     // 삭제
@@ -107,16 +99,18 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/board/list?type=" + type;
     }
-    //페이지 맵핑
+
+    // 수정폼
     @GetMapping("/modify/{id}")
     public String showModifyForm(@PathVariable Long id, Model model) {
         Board board = boardService.getBoard(id);
         model.addAttribute("board", board);
-        return "board/modify"; // board/modify.html
+        return "board/modify";
     }
-    //페이지 처리
+
+    // 수정 처리 (🔥 수정)
     @PostMapping("/modify/{id}")
-    public String modifySubmit(@PathVariable Long id, @ModelAttribute Board board, Principal principal) {
+    public String modifySubmit(@PathVariable Long id, @ModelAttribute Board board, Principal principal, HttpServletRequest request) {
         Board original = boardService.getBoard(id);
 
         if (!original.getAuthor().equals(principal.getName())) {
@@ -124,12 +118,16 @@ public class BoardController {
         }
 
         original.setTitle(board.getTitle());
-        original.setContent(board.getContent());
         original.setSubCategory(board.getSubCategory());
         original.setUpdatedAt(LocalDateTime.now());
+
+        // 🔥 수정에서도 AutoLink + Sanitize 적용
+        String rawContent = request.getParameter("content");
+        String linkedContent = AutoLinkUtil.convertUrlsToLinks(rawContent);
+        String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
+        original.setContent(cleanContent);
 
         boardService.save(original);
         return "redirect:/board/view/" + id;
     }
-   
 }
