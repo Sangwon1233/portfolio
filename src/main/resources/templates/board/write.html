@@ -51,9 +51,14 @@
 
     <!-- quill cdn 호출 -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <!--  AutoLink 모듈  로드 -->
-    <script src="https://unpkg.com/quill-auto-links@1.0.1/dist/quill-auto-links.min.js"></script>
+
+    <!-- autolink (UMD) -->
+    <script src="https://cdn.jsdelivr.net/npm/quill-auto-links@1.0.1/dist/umd/quill-auto-links.min.js"></script>
     
+    <script>
+        Quill.register('modules/autoLinks', quillAutoLinks.default);
+    </script>
+
 
     <script th:src="@{/js/quill.js}"></script>
 </body>
