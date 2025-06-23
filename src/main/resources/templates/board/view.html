@@ -30,7 +30,6 @@
                     <input type="hidden" name="type" th:value="${board.boardType}" />
                     <button type="submit">삭제</button>
                 </form>
-
                 <a th:href="@{'/board/modify/' + ${board.id}}">수정</a>
             </sec:authorize>
 
