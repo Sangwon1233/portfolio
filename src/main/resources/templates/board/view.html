@@ -3,7 +3,7 @@
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
 <head>
     <meta charset="UTF-8">
-    <title th:text="${board.title}">상세보기</title>
+    <title th:utext="${board.title}">상세보기</title>
     <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
 </head>
 <body>
@@ -40,6 +40,7 @@
     </div>
 
     <div th:replace="footer/footer :: footer"></div>
+    
 
     <script th:src="@{/js/main.js}"></script>
 </body>
