@@ -1,5 +1,3 @@
-Quill.register('modules/autoLinks', quillAutoLinks.default);
-
 // Quill 에디터 초기화 (수정 폼)
 const quill = new Quill('#editor', {
     theme: 'snow',

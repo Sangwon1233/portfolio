@@ -59,6 +59,10 @@
         <!--  AutoLink 모듈  로드 -->
     <script src="https://unpkg.com/quill-auto-links@1.0.1/dist/quill-auto-links.min.js"></script>
 
+     <script>
+        Quill.register('modules/autoLinks', quillAutoLinks.default);
+    </script>
+
     <script th:src="@{/js/quill_modify.js}"></script>
 </body>
 </html>
