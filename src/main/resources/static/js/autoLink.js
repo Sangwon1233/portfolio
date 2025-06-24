@@ -1,21 +1,15 @@
-// autoLink.js
 function enableAutoLink(quill) {
-  quill.on('text-change', function (delta, oldDelta, source) {
-    if (source !== 'user') return;
-
-    const range = quill.getSelection();
-    if (!range) return;
-
-    const [line, offset] = quill.getLine(range.index);
-    const text = line.domNode.innerText;
-
     const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
-    let match;
-    while ((match = urlRegex.exec(text)) !== null) {
-      const url = match[0];
-      const index = match.index;
-      const fullUrl = url.startsWith('http') ? url : 'http://' + url;
-      quill.formatText(line.offset(index), url.length, 'link', fullUrl, 'user');
-    }
-  });
+    quill.root.addEventListener('keyup', function () {
+        const sel = quill.getSelection();
+        if (!sel || sel.length) return;
+        const [leaf] = quill.getLeaf(sel.index);
+        const text = leaf.text;
+        const match = urlRegex.exec(text);
+        if (match) {
+            const url = match[0];
+            const index = sel.index - url.length;
+            quill.formatText(index, url.length, 'link', url.startsWith('http') ? url : 'http://' + url);
+        }
+    });
 }
