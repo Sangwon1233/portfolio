@@ -3,16 +3,12 @@ package com.sangwon97.portfolio.controller;
 import com.sangwon97.portfolio.domain.dto.BoardModifyForm;
 import com.sangwon97.portfolio.domain.entity.Board;
 import com.sangwon97.portfolio.service.BoardService;
-import com.sangwon97.portfolio.util.AutoLinkUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,14 +25,14 @@ public class BoardController {
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
+
     // 게시판 목록
     @GetMapping("/list")
     public String list(@RequestParam String type,
-                    @RequestParam(required = false) String subCategory,
-                    Model model) {
+                       @RequestParam(required = false) String subCategory,
+                       Model model) {
         List<Board> boards = boardService.getBoards(type, subCategory);
 
-        // ✅ 사용자에게 보여줄 이름 설정
         String displayName = switch (type) {
             case "notion" -> "메모";
             case "project" -> "프로젝트";
@@ -53,7 +49,7 @@ public class BoardController {
     }
 
     // 게시글 상세
-   @GetMapping("/view/{id}")
+    @GetMapping("/view/{id}")
     public String view(@PathVariable Long id, String type, Model model) {
         Board board = boardService.getBoard(id);
         model.addAttribute("board", board);
@@ -72,31 +68,23 @@ public class BoardController {
         return "board/view";
     }
 
-
+    // 글쓰기 폼 GET
     @GetMapping("/write")
     public String showWriteForm(@RequestParam String type, Model model) {
         model.addAttribute("boardType", type);
         return "board/write";
     }
 
-    // 글쓰기 폼
+    // 글쓰기 POST
     @PostMapping("/write")
     public String write(@ModelAttribute Board board, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         board.setAuthor(username);
 
-        // 🔥 AutoLink + Sanitize 적용
+        // 필터를 통해 이미 content는 sanitize 된 상태
         String rawContent = request.getParameter("content");
-        String cleanContent = Jsoup.clean(rawContent, Safelist.relaxed());
-        board.setContent(cleanContent);
-
-        // 디버깅 로그
-        System.out.println("title: " + board.getTitle());
-        System.out.println("content: " + board.getContent());
-        System.out.println("author: " + board.getAuthor());
-        System.out.println("boardType: " + board.getBoardType());
-        System.out.println("subCategory: " + board.getSubCategory());
+        board.setContent(rawContent);
 
         boardService.save(board);
         return "redirect:/board/list?type=" + board.getBoardType();
@@ -109,7 +97,7 @@ public class BoardController {
         return "redirect:/board/list?type=" + type;
     }
 
-    // 수정폼
+    // 수정 폼
     @GetMapping("/modify/{id}")
     public String showModifyForm(@PathVariable Long id, Model model) {
         Board board = boardService.getBoard(id);
@@ -117,7 +105,7 @@ public class BoardController {
         return "board/modify";
     }
 
-    // 수정 처리 @PostMapping("/modify/{id}")
+    // 수정 처리
     @PostMapping("/modify/{id}")
     public String modifySubmit(@PathVariable Long id,
                                 @ModelAttribute BoardModifyForm form,
@@ -132,13 +120,9 @@ public class BoardController {
         original.setTitle(form.getTitle());
         original.setSubCategory(form.getSubCategory());
         original.setUpdatedAt(LocalDateTime.now());
-
-        String cleanContent = Jsoup.clean(form.getContent(), Safelist.relaxed());
-        original.setContent(cleanContent);
+        original.setContent(form.getContent()); // sanitize 는 이미 필터에서 적용됨
 
         boardService.save(original);
         return "redirect:/board/view/" + id;
     }
-
-
 }

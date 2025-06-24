@@ -24,8 +24,10 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
 
     private static Safelist createSafeList() {
         return Safelist.relaxed()
-                .addAttributes("a", "target", "rel")  // a 태그 target, rel 속성 허용
+                .addTags("img")  // img 태그 자체를 허용
+                .addAttributes("img", "src", "alt", "title", "width", "height", "style")
+                .addAttributes("a", "target", "rel")
                 .addProtocols("a", "href", "http", "https")
-                .addProtocols("img", "src", "http", "https", "data");
+                .addProtocols("img", "src", "http", "https", "data");  // 이미지 업로드 대응 (data URL 포함)
     }
 }
