@@ -1,5 +1,6 @@
 package com.sangwon97.portfolio.controller;
 
+import com.sangwon97.portfolio.domain.dto.BoardModifyForm;
 import com.sangwon97.portfolio.domain.entity.Board;
 import com.sangwon97.portfolio.service.BoardService;
 import com.sangwon97.portfolio.util.AutoLinkUtil;
@@ -108,26 +109,25 @@ public class BoardController {
         return "board/modify";
     }
 
-    // 수정 처리 (🔥 수정)
-    @PostMapping("/modify/{id}")
-    public String modifySubmit(@PathVariable Long id, @ModelAttribute Board board, Principal principal, HttpServletRequest request) {
+    // 수정 처리 @PostMapping("/modify/{id}")
+    public String modifySubmit(@PathVariable Long id, BoardModifyForm form, Principal principal, HttpServletRequest request) {
         Board original = boardService.getBoard(id);
 
         if (!original.getAuthor().equals(principal.getName())) {
             throw new AccessDeniedException("수정 권한이 없습니다.");
         }
 
-        original.setTitle(board.getTitle());
-        original.setSubCategory(board.getSubCategory());
+        original.setTitle(form.getTitle());
+        original.setSubCategory(form.getSubCategory());
         original.setUpdatedAt(LocalDateTime.now());
 
-        // 🔥 수정에서도 AutoLink + Sanitize 적용
-        String rawContent = request.getParameter("content");
-        String linkedContent = AutoLinkUtil.convertUrlsToLinks(rawContent);
+        // 🔥 sanitize
+        String linkedContent = AutoLinkUtil.convertUrlsToLinks(form.getContent());
         String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
         original.setContent(cleanContent);
 
         boardService.save(original);
         return "redirect:/board/view/" + id;
     }
+
 }
