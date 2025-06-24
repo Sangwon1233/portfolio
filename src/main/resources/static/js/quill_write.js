@@ -16,8 +16,7 @@ const quill = new Quill('#editor', {
     }
 });
 
-enableAutoLink(quill);
-
+// 이미지 핸들러
 function imageHandler() {
     const input = document.createElement('input');
     input.type = 'file';
@@ -28,20 +27,23 @@ function imageHandler() {
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
-            const response = await fetch('/api/image/upload', { method: 'POST', body: formData });
-            const data = await response.json();
-            const range = quill.getSelection();
-            quill.insertEmbed(range.index, 'image', data.imageUrl);
+            try {
+                const response = await fetch('/api/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (!response.ok) throw new Error('Upload failed');
+                const data = await response.json();
+                const imageUrl = data.imageUrl;
+                const range = quill.getSelection();
+                quill.insertEmbed(range.index, 'image', imageUrl);
+            } catch (err) {
+                alert('이미지 업로드 실패');
+            }
         }
     };
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.board-form');
-    form.addEventListener('submit', function () {
-        document.getElementById('content').value = quill.root.innerHTML;
-    });
+document.querySelector('.board-form').addEventListener('submit', function () {
+    document.getElementById('content').value = quill.root.innerHTML;
 });
-
-
-

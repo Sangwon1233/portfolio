@@ -1,4 +1,3 @@
-// Quill 에디터 초기화
 const quill = new Quill('#editor', {
     theme: 'snow',
     placeholder: '내용을 입력하세요...',
@@ -17,8 +16,9 @@ const quill = new Quill('#editor', {
     }
 });
 
-// 자동 하이퍼링크 기능 활성화
-enableAutoLink(quill);
+// 초기 데이터 삽입
+const initialContentValue = document.getElementById('initialContent').value;
+quill.root.innerHTML = initialContentValue;
 
 // 이미지 핸들러
 function imageHandler() {
@@ -48,13 +48,6 @@ function imageHandler() {
     };
 }
 
-// submit 시 content에 html 저장 + 초기 데이터 삽입
-document.addEventListener('DOMContentLoaded', function() {
-    const initialContentValue = document.getElementById('initialContent').value;
-    quill.root.innerHTML = initialContentValue;
-
-    const form = document.querySelector('.board-form');
-    form.addEventListener('submit', function () {
-        document.getElementById('content').value = quill.root.innerHTML;
-    });
+document.querySelector('.board-form').addEventListener('submit', function () {
+    document.getElementById('content').value = quill.root.innerHTML;
 });

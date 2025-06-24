@@ -28,6 +28,6 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
                 .addAttributes("img", "src", "alt", "title", "width", "height", "style")
                 .addAttributes("a", "target", "rel")
                 .addProtocols("a", "href", "http", "https")
-                .addProtocols("img", "src", "http", "https", "data");  // 이미지 업로드 대응 (data URL 포함)
+                .addProtocols("img", "src", "http", "https"); 
     }
 }
