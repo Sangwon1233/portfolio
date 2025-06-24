@@ -48,6 +48,9 @@ dependencies {
 	//cloudinary
 	implementation 'com.cloudinary:cloudinary-http44:1.33.0'
 
+	implementation 'ch.qos.logback:logback-classic:1.2.11'
+
+
 }
 
 tasks.named('test') {
