@@ -36,9 +36,11 @@ function imageHandler() {
     };
 }
 
-document.querySelector('.board-form').addEventListener('submit', function (e) {
-    e.preventDefault();  // 기본 submit 막기
-    document.getElementById('content').value = quill.root.innerHTML;
-    this.submit();  // 값 세팅한 후 수동으로 submit
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.board-form');
+    form.addEventListener('submit', function () {
+        document.getElementById('content').value = quill.root.innerHTML;
+    });
 });
+
 

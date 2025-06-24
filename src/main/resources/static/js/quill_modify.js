@@ -53,9 +53,14 @@ function imageHandler() {
 }
 
 // submit 시 content에 html 저장
-document.querySelector('.board-form').addEventListener('submit', function (e) {
-    e.preventDefault();  // 기본 submit 막기
-    document.getElementById('content').value = quill.root.innerHTML;
-    this.submit();  // 값 세팅한 후 수동으로 submit
+document.addEventListener('DOMContentLoaded', function() {
+    const initialContentValue = document.getElementById('initialContent').value;
+    quill.root.innerHTML = initialContentValue;
+
+    const form = document.querySelector('.board-form');
+    form.addEventListener('submit', function () {
+        document.getElementById('content').value = quill.root.innerHTML;
+    });
 });
+
 
