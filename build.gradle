@@ -27,9 +27,6 @@ dependencies {
 	//sql 의존성
 	implementation 'mysql:mysql-connector-java:8.0.33'
 
-	//암호화 의존성
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
 	//Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
@@ -37,7 +34,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
 
 	//타임리프 의존성
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+	
 	//시큐리티
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
