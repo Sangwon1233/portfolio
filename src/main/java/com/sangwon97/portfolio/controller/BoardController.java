@@ -77,6 +77,12 @@ public class BoardController {
         return "board/view";
     }
 
+    @GetMapping("/write")
+    public String showWriteForm(@RequestParam String type, Model model) {
+        model.addAttribute("boardType", type);
+        return "board/write";
+    }
+
     // 글쓰기 폼
     @PostMapping("/write")
     public String write(@ModelAttribute Board board, HttpServletRequest request) {
