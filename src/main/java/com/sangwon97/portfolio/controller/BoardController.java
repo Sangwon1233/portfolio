@@ -56,8 +56,6 @@ public class BoardController {
    @GetMapping("/view/{id}")
     public String view(@PathVariable Long id, String type, Model model) {
         Board board = boardService.getBoard(id);
-        String convertedContent = AutoLinkUtil.convertUrlsToLinks(board.getContent());
-        board.setContent(convertedContent);
         model.addAttribute("board", board);
 
         if (type == null) {
@@ -74,6 +72,7 @@ public class BoardController {
         return "board/view";
     }
 
+
     @GetMapping("/write")
     public String showWriteForm(@RequestParam String type, Model model) {
         model.addAttribute("boardType", type);
@@ -89,7 +88,6 @@ public class BoardController {
 
         // 🔥 AutoLink + Sanitize 적용
         String rawContent = request.getParameter("content");
-        // String linkedContent = AutoLinkUtil.convertUrlsToLinks(rawContent);
         String cleanContent = Jsoup.clean(rawContent, Safelist.relaxed());
         board.setContent(cleanContent);
 
