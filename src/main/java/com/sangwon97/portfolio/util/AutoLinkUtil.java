@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class AutoLinkUtil {
 
     private static final Pattern URL_PATTERN = Pattern.compile(
-            "(https?://[\\w\\-._~:/?#[\\]@!$&'()*+,;=%]+)|(www\\.[\\w\\-._~:/?#[\\]@!$&'()*+,;=%]+)",
+            "(https?://[\\w\\-._~:/?#[\\]\\@!$&'()*+,;=%]+)|(www\\.[\\w\\-._~:/?#[\\]\\@!$&'()*+,;=%]+)",
             Pattern.CASE_INSENSITIVE);
 
     public static String convertUrlsToLinks(String text) {
