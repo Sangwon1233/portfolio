@@ -17,7 +17,7 @@ public class AutoLinkUtil {
             String url = matcher.group();
             String href = url.startsWith("http") ? url : "http://" + url;
             String linkTag = String.format("<a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">%s</a>", href, url);
-            matcher.appendReplacement(sb, linkTag);
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(linkTag));
         }
         matcher.appendTail(sb);
         return sb.toString();
