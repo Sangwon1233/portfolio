@@ -20,10 +20,6 @@ const quill = new Quill('#editor', {
 // 자동 하이퍼링크 기능 활성화
 enableAutoLink(quill);
 
-// 서버에서 초기 데이터 불러와서 삽입
-const initialContentValue = document.getElementById('initialContent').value;
-quill.root.innerHTML = initialContentValue;
-
 // 이미지 핸들러
 function imageHandler() {
     const input = document.createElement('input');
@@ -52,7 +48,7 @@ function imageHandler() {
     };
 }
 
-// submit 시 content에 html 저장
+// submit 시 content에 html 저장 + 초기 데이터 삽입
 document.addEventListener('DOMContentLoaded', function() {
     const initialContentValue = document.getElementById('initialContent').value;
     quill.root.innerHTML = initialContentValue;
@@ -62,5 +58,3 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('content').value = quill.root.innerHTML;
     });
 });
-
-

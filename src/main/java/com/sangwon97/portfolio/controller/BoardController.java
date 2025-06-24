@@ -53,19 +53,16 @@ public class BoardController {
     }
 
     // 게시글 상세
-    @GetMapping("/view/{id}")
+   @GetMapping("/view/{id}")
     public String view(@PathVariable Long id, String type, Model model) {
+        Board board = boardService.getBoard(id);
+        String convertedContent = AutoLinkUtil.convertUrlsToLinks(board.getContent());
+        board.setContent(convertedContent);
+        model.addAttribute("board", board);
 
-    Board board = boardService.getBoard(id);
-    //test log
-    System.out.println("내용 확인: [" + board.getContent() + "]");
-    model.addAttribute("board", board);
-
-    // type이 null일 경우 board에서 직접 꺼내도록 수정
-    if (type == null) {
-        type = board.getBoardType();
-    }
-
+        if (type == null) {
+            type = board.getBoardType();
+        }
         String displayName = switch (type) {
             case "notion" -> "메모";
             case "project" -> "프로젝트";
@@ -92,8 +89,8 @@ public class BoardController {
 
         // 🔥 AutoLink + Sanitize 적용
         String rawContent = request.getParameter("content");
-        String linkedContent = AutoLinkUtil.convertUrlsToLinks(rawContent);
-        String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
+        // String linkedContent = AutoLinkUtil.convertUrlsToLinks(rawContent);
+        String cleanContent = Jsoup.clean(rawContent, Safelist.relaxed());
         board.setContent(cleanContent);
 
         // 디버깅 로그
@@ -138,8 +135,7 @@ public class BoardController {
         original.setSubCategory(form.getSubCategory());
         original.setUpdatedAt(LocalDateTime.now());
 
-        String linkedContent = AutoLinkUtil.convertUrlsToLinks(form.getContent());
-        String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
+        String cleanContent = Jsoup.clean(form.getContent(), Safelist.relaxed());
         original.setContent(cleanContent);
 
         boardService.save(original);
