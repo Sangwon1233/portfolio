@@ -110,7 +110,11 @@ public class BoardController {
     }
 
     // 수정 처리 @PostMapping("/modify/{id}")
-    public String modifySubmit(@PathVariable Long id, BoardModifyForm form, Principal principal, HttpServletRequest request) {
+    @PostMapping("/modify/{id}")
+    public String modifySubmit(@PathVariable Long id,
+                                @ModelAttribute BoardModifyForm form,
+                                Principal principal) {
+
         Board original = boardService.getBoard(id);
 
         if (!original.getAuthor().equals(principal.getName())) {
@@ -121,7 +125,6 @@ public class BoardController {
         original.setSubCategory(form.getSubCategory());
         original.setUpdatedAt(LocalDateTime.now());
 
-        // 🔥 sanitize
         String linkedContent = AutoLinkUtil.convertUrlsToLinks(form.getContent());
         String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
         original.setContent(cleanContent);
@@ -129,5 +132,6 @@ public class BoardController {
         boardService.save(original);
         return "redirect:/board/view/" + id;
     }
+
 
 }
