@@ -96,6 +96,13 @@ public class BoardController {
         String cleanContent = Jsoup.clean(linkedContent, Safelist.relaxed());
         board.setContent(cleanContent);
 
+        // 디버깅 로그
+        System.out.println("title: " + board.getTitle());
+        System.out.println("content: " + board.getContent());
+        System.out.println("author: " + board.getAuthor());
+        System.out.println("boardType: " + board.getBoardType());
+        System.out.println("subCategory: " + board.getSubCategory());
+
         boardService.save(board);
         return "redirect:/board/list?type=" + board.getBoardType();
     }
