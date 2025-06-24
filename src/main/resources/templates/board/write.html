@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${boardTypeDisplay} + ' 게시판 - 글쓰기'">글쓰기</title>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
 </head>
 <body>
@@ -50,15 +50,9 @@
     <script th:src="@{/js/main.js}"></script>
 
     <!-- quill cdn 호출 -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.js"></script>
 
-    <!-- autolink (UMD) -->
-    <script src="https://cdn.jsdelivr.net/npm/quill-auto-links@1.0.1/dist/umd/quill-auto-links.min.js"></script>
-    
-    <script>
-        Quill.register('modules/autoLinks', quillAutoLinks.default);
-    </script>
-
+    <script th:src="@{/js/autoLink.js}"></script>
 
     <script th:src="@{/js/quill.js}"></script>
 </body>

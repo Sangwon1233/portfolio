@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title th:text="${boardTypeDisplay} + ' 게시판 - 수정'">글 수정</title>
     <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
+     <!-- 최신 Quill 2.x CSS로 교체 -->
+    <link href="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.snow.css" rel="stylesheet">
 </head>
 <body>
     <div th:replace="header/header :: header"></div>
@@ -35,9 +37,7 @@
 
             <label for="content">내용</label>
             <div id="editor" style="height: 300px;"></div>
-            <input type="hidden" id="content" name="content" th:value="${board.content}" />
-
-            <!-- 서버 초기 데이터 js로 넘겨주기 -->
+            <input type="hidden" id="content" name="content" />
             <input type="hidden" id="initialContent" th:value="${board.content}" />
 
             <div class="action-buttons">
@@ -52,7 +52,9 @@
 
     <div th:replace="footer/footer :: footer"></div>
 
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+     <!-- 최신 Quill 2.x JS로 교체 -->
+    <script src="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.js"></script>
+
     <script th:src="@{/js/autoLink.js}"></script>
     <script th:inline="javascript">
         const initialContent = /*[[${board.content}]]*/ '';

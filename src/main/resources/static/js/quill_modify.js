@@ -21,7 +21,8 @@ const quill = new Quill('#editor', {
 enableAutoLink(quill);
 
 // 서버에서 초기 데이터 불러와서 삽입
-quill.root.innerHTML = initialContent;
+const initialContentValue = document.getElementById('initialContent').value;
+quill.root.innerHTML = initialContentValue;
 
 // 이미지 핸들러
 function imageHandler() {
