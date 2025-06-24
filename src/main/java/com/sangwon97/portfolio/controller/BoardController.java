@@ -82,9 +82,9 @@ public class BoardController {
         String username = auth.getName();
         board.setAuthor(username);
 
-        // 필터를 통해 이미 content는 sanitize 된 상태
-        String rawContent = request.getParameter("content");
-        board.setContent(rawContent);
+        // sanitize는 필터에서 이미 처리됨
+        String sanitizedContent = request.getParameter("content");
+        board.setContent(sanitizedContent);
 
         boardService.save(board);
         return "redirect:/board/list?type=" + board.getBoardType();
@@ -109,7 +109,8 @@ public class BoardController {
     @PostMapping("/modify/{id}")
     public String modifySubmit(@PathVariable Long id,
                                 @ModelAttribute BoardModifyForm form,
-                                Principal principal) {
+                                Principal principal,
+                                HttpServletRequest request) {
 
         Board original = boardService.getBoard(id);
 
@@ -120,7 +121,10 @@ public class BoardController {
         original.setTitle(form.getTitle());
         original.setSubCategory(form.getSubCategory());
         original.setUpdatedAt(LocalDateTime.now());
-        original.setContent(form.getContent()); // sanitize 는 이미 필터에서 적용됨
+
+        // sanitize는 필터에서 이미 처리됨
+        String sanitizedContent = request.getParameter("content");
+        original.setContent(sanitizedContent);
 
         boardService.save(original);
         return "redirect:/board/view/" + id;
