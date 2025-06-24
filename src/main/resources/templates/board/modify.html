@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <title th:text="${boardTypeDisplay} + ' 게시판 - 수정'">글 수정</title>
     <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
-     <!-- 최신 Quill 2.x CSS로 교체 -->
-    <link href="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/quill.snow.css}">
 </head>
 <body>
     <div th:replace="header/header :: header"></div>
@@ -52,10 +51,9 @@
 
     <div th:replace="footer/footer :: footer"></div>
 
-     <!-- 최신 Quill 2.x JS로 교체 -->
-    <script src="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.js"></script>
-
+    <script th:src="@{/js/quill.js}"></script>
     <script th:src="@{/js/autoLink.js}"></script>
     <script th:src="@{/js/quill_modify.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

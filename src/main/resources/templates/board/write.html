@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${boardTypeDisplay} + ' 게시판 - 글쓰기'">글쓰기</title>
-    <link href="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/quill.snow.css}">
     <link rel="stylesheet" th:href="@{/css/boardStyle.css}">
 </head>
 <body>
@@ -46,13 +46,8 @@
     </div>
 
     <div th:replace="footer/footer :: footer"></div>
-
-    
-    <!-- quill cdn 호출 -->
-    <script src="https://cdn.jsdelivr.net/npm/@quilljs/quill@2.0.0-dev.4/dist/quill.js"></script>
-    
+    <script th:src="@{/js/quill.js}"></script>
     <script th:src="@{/js/autoLink.js}"></script>
-    
     <script th:src="@{/js/quill_write.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </body>
