@@ -39,6 +39,7 @@ public class Board {
     private String subCategory; // notion만 사용하는 필드
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Image> images = new ArrayList<>();
 
     @CreationTimestamp

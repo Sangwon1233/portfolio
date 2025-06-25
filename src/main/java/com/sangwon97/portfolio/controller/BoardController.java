@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/board")
@@ -77,7 +78,8 @@ public class BoardController {
 
     // 글쓰기 POST
     @PostMapping("/write")
-    public String write(@ModelAttribute Board board) {
+    public String write(@ModelAttribute Board board,@RequestParam("files") List<MultipartFile> files, 
+        Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         board.setAuthor(username);
@@ -86,7 +88,7 @@ public class BoardController {
         // String sanitizedContent = request.getParameter("content");
         // board.setContent(sanitizedContent);
 
-        boardService.save(board);
+        boardService.save(board, files, "board");
         return "redirect:/board/list?type=" + board.getBoardType();
     }
 
@@ -109,6 +111,8 @@ public class BoardController {
     @PostMapping("/modify/{id}")
     public String modifySubmit(@PathVariable Long id,
                                 @ModelAttribute BoardModifyForm form,
+                                @RequestParam(value = "files", required = false) List<MultipartFile> files,
+                                @RequestParam(value = "deleteImageIds", required = false) List<Long> deleteImageIds,
                                 Principal principal) {
 
         Board original = boardService.getBoard(id);
@@ -117,16 +121,16 @@ public class BoardController {
             throw new AccessDeniedException("수정 권한이 없습니다.");
         }
 
-        original.setTitle(form.getTitle());
-        original.setSubCategory(form.getSubCategory());
-        original.setUpdatedAt(LocalDateTime.now());
-        original.setContent(form.getContent());
+        // original.setTitle(form.getTitle());
+        // original.setSubCategory(form.getSubCategory());
+        // original.setUpdatedAt(LocalDateTime.now());
+        // original.setContent(form.getContent());
 
         // sanitize는 필터에서 이미 처리됨
         // String sanitizedContent = request.getParameter("content");
         // original.setContent(sanitizedContent);
 
-        boardService.save(original);
+        boardService.update(original, form, files, deleteImageIds, "board");
         return "redirect:/board/view/" + id;
     }
 }

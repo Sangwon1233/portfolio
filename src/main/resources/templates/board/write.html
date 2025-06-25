@@ -11,7 +11,7 @@
 
     <div class="board-page-container">
         <h1 class="board-page-title" th:text="${boardTypeDisplay} + ' 게시판'">게시판</h1>
-        <form method="post" th:action="@{/board/write}" class="board-form">
+        <form method="post" th:action="@{/board/write}" class="board-form" enctype="multipart/form-data">
             <input type="hidden" name="boardType" th:value="${boardType}"/>
 
             <div th:if="${boardType == 'notion'}">
@@ -37,6 +37,10 @@
             <label for="editor">내용</label>
             <div id="editor" style="height: 400px;"></div>
             <input type="hidden" id="content" name="content" />
+
+            <label for="files">이미지 업로드</label>
+            <input type="file" id="files" name="files" multiple />
+            <br/>
 
             <div class="action-buttons">
                 <button type="submit">등록</button>

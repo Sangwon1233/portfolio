@@ -12,7 +12,7 @@
 
     <div class="board-page-container">
         <h1 class="board-page-title" th:text="${boardTypeDisplay} + ' 게시판'">게시판</h1>
-        <form method="post" th:action="@{'/board/modify/' + ${board.id}}" class="board-form">
+        <form method="post" th:action="@{'/board/modify/' + ${board.id}}" class="board-form" enctype="multipart/form-data">
             <input type="hidden" name="boardType" th:value="${boardType}" />
 
             <div th:if="${boardType == 'notion'}">
@@ -38,6 +38,15 @@
             <div id="editor" style="height: 300px;"></div>
             <input type="hidden" id="content" name="content" />
             <input type="hidden" id="initialContent" th:value="${board.content}" />
+
+            <div th:each="image : ${board.images}">
+                <img th:src="${image.imageUrl}" width="150"/>
+                <label><input type="checkbox" name="deleteImageIds" th:value="${image.id}"/> 삭제</label>
+            </div>
+            
+            <label for="files">새 이미지 추가</label>
+            <input type="file" id="files" name="files" multiple /><br/>
+                
 
             <div class="action-buttons">
                 <a th:href="@{'/board/view/' + ${board.id}}">취소</a>

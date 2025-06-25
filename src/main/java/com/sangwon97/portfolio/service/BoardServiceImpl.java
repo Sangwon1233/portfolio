@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sangwon97.portfolio.domain.dto.BoardModifyForm;
 import com.sangwon97.portfolio.domain.entity.Board;
 import com.sangwon97.portfolio.domain.entity.Image;
 import com.sangwon97.portfolio.repository.BoardRepository;
 import com.sangwon97.portfolio.repository.ImageRepository;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
@@ -25,25 +27,51 @@ public class BoardServiceImpl implements BoardService {
         this.imageRepository = imageRepository;
     }
 
-    @Override
-    @Transactional
-    public void save(Board board, List<MultipartFile> files, String folderName) {
-
-        if (board.getCreatedAt() == null) {
-            board.setCreatedAt(LocalDateTime.now());
-        }
+    @Override //오버로딩
+    public void save(Board board) {
         board.setUpdatedAt(LocalDateTime.now());
-        boardRepository.save(board);  // Board 먼저 저장해서 PK 얻음
+        boardRepository.save(board);
+    }
 
-        // 이미지들 처리
-        for (MultipartFile file : files) {
-            String uploadedUrl = cloudinaryService.uploadImage(file, folderName);
+     @Override
+    public void save(Board board, List<MultipartFile> files, String folderName) {
+        boardRepository.save(board);
 
-            Image image = new Image();
-            image.setFileName(file.getOriginalFilename());
-            image.setImageUrl(uploadedUrl);
-            image.setBoard(board);  // Board 연결이 핵심
-            imageRepository.save(image);
+        if (files != null) {
+            for (MultipartFile file : files) {
+                String uploadedUrl = cloudinaryService.uploadImage(file, folderName);
+                Image image = new Image();
+                image.setFileName(file.getOriginalFilename());
+                image.setImageUrl(uploadedUrl);
+                image.setBoard(board);
+                imageRepository.save(image);
+            }
+        }
+    }
+
+    @Override
+    public void update(Board board, BoardModifyForm form, List<MultipartFile> files, List<Long> deleteImageIds, String folderName) {
+        board.setTitle(form.getTitle());
+        board.setContent(form.getContent());
+        board.setSubCategory(form.getSubCategory());
+        board.setUpdatedAt(LocalDateTime.now());
+        boardRepository.save(board);
+
+        if (deleteImageIds != null) {
+            for (Long imageId : deleteImageIds) {
+                imageRepository.deleteById(imageId);
+            }
+        }
+
+        if (files != null) {
+            for (MultipartFile file : files) {
+                String uploadedUrl = cloudinaryService.uploadImage(file, folderName);
+                Image image = new Image();
+                image.setFileName(file.getOriginalFilename());
+                image.setImageUrl(uploadedUrl);
+                image.setBoard(board);
+                imageRepository.save(image);
+            }
         }
     }
 
@@ -72,14 +100,14 @@ public class BoardServiceImpl implements BoardService {
         return getBoards(type);
     }
 
-    @Override
-    public Board update(Long id, Board updatedBoard) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("게시글 없음"));
-        board.setTitle(updatedBoard.getTitle());
-        board.setContent(updatedBoard.getContent());
-        board.setUpdatedAt(LocalDateTime.now());
-        return boardRepository.save(board); // ✅ 저장 후 리턴
-    }
+    // @Override
+    // public Board update(Long id, Board updatedBoard) {
+    //     Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("게시글 없음"));
+    //     board.setTitle(updatedBoard.getTitle());
+    //     board.setContent(updatedBoard.getContent());
+    //     board.setUpdatedAt(LocalDateTime.now());
+    //     return boardRepository.save(board); // ✅ 저장 후 리턴
+    // }
 
     
 }
