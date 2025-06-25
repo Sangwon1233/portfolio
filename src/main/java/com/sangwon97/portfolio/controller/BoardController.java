@@ -104,6 +104,7 @@ public class BoardController {
     public String showModifyForm(@PathVariable Long id, Model model) {
         Board board = boardService.getBoard(id);
         model.addAttribute("board", board);
+        model.addAttribute("boardType", board.getBoardType()); 
         return "board/modify";
     }
 
