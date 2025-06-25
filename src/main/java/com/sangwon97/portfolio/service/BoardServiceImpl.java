@@ -67,7 +67,7 @@ public class BoardServiceImpl implements BoardService {
         }
 
         if (files != null) {
-            for (MultipartFile file : files) {.
+            for (MultipartFile file : files) {
                 if (file.isEmpty()) {
                     continue; // 빈 파일은 skip
                 }
