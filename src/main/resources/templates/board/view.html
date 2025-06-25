@@ -22,7 +22,13 @@
         <div class="board-detail-content">
             <div th:utext="${board.content}"></div>
         </div>
-        
+        <!-- 이미지 출력 부분 추가 -->
+        <div class="board-detail-images">
+            <h3>첨부 이미지</h3>
+            <div th:each="image : ${board.images}">
+                <img th:src="${image.imageUrl}" width="300" style="margin:10px 0;" />
+            </div>
+        </div>
 
         <div class="action-buttons">
             <div th:if="${#authorization.expression('isAuthenticated()') and #authentication.name == board.author}">
