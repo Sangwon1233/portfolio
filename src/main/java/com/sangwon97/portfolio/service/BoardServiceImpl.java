@@ -39,12 +39,15 @@ public class BoardServiceImpl implements BoardService {
 
         if (files != null) {
             for (MultipartFile file : files) {
-                String uploadedUrl = cloudinaryService.uploadImage(file, folderName);
-                Image image = new Image();
-                image.setFileName(file.getOriginalFilename());
-                image.setImageUrl(uploadedUrl);
-                image.setBoard(board);
-                imageRepository.save(image);
+                if (file.isEmpty()) {
+                    continue; // 빈 파일은 skip
+                }
+                    String uploadedUrl = cloudinaryService.uploadImage(file, folderName);
+                    Image image = new Image();
+                    image.setFileName(file.getOriginalFilename());
+                    image.setImageUrl(uploadedUrl);
+                    image.setBoard(board);
+                    imageRepository.save(image);
             }
         }
     }
@@ -64,7 +67,10 @@ public class BoardServiceImpl implements BoardService {
         }
 
         if (files != null) {
-            for (MultipartFile file : files) {
+            for (MultipartFile file : files) {.
+                if (file.isEmpty()) {
+                    continue; // 빈 파일은 skip
+                }
                 String uploadedUrl = cloudinaryService.uploadImage(file, folderName);
                 Image image = new Image();
                 image.setFileName(file.getOriginalFilename());
