@@ -21,6 +21,10 @@ public class Image {
     @Column(columnDefinition = "TEXT")
     private String imageUrl;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }
