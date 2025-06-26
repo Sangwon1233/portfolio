@@ -3,6 +3,11 @@ package com.sangwon97.portfolio.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,15 +25,19 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     private final CloudinaryService cloudinaryService;
     private final ImageRepository imageRepository;
+    private final ImageServiceImpl imageServiceImpl;
 
-    public BoardServiceImpl(BoardRepository boardRepository, CloudinaryService cloudinaryService, ImageRepository imageRepository) {
+    public BoardServiceImpl(BoardRepository boardRepository, CloudinaryService cloudinaryService, ImageRepository imageRepository,ImageServiceImpl imageServiceImpl) {
         this.boardRepository = boardRepository;
         this.cloudinaryService = cloudinaryService;
         this.imageRepository = imageRepository;
+        this.imageServiceImpl = imageServiceImpl;
     }
 
     @Override //오버로딩
     public void save(Board board) {
+        String replacedContent = replaceBase64Images(board.getContent(), board);
+        board.setContent(replacedContent);
         board.setUpdatedAt(LocalDateTime.now());
         boardRepository.save(board);
     }
@@ -106,14 +115,30 @@ public class BoardServiceImpl implements BoardService {
         return getBoards(type);
     }
 
-    // @Override
-    // public Board update(Long id, Board updatedBoard) {
-    //     Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("게시글 없음"));
-    //     board.setTitle(updatedBoard.getTitle());
-    //     board.setContent(updatedBoard.getContent());
-    //     board.setUpdatedAt(LocalDateTime.now());
-    //     return boardRepository.save(board); // ✅ 저장 후 리턴
-    // }
+    private String replaceBase64Images(String content, Board board) {
+        Document doc = Jsoup.parse(content);
+        Elements images = doc.select("img");
+
+        for (Element img : images) {
+            String src = img.attr("src");
+            if (src != null && src.startsWith("data:image")) {
+                // base64 업로드
+                String url = imageServiceImpl.uploadBase64Image(src);
+
+                // DB 저장
+                Image image = new Image();
+                image.setImageUrl(url);
+                image.setBoard(board);
+                imageRepository.save(image);
+
+                // HTML 교체
+                img.attr("src", url);
+            }
+        }
+
+        return doc.body().html();
+    }
+
 
     
 }

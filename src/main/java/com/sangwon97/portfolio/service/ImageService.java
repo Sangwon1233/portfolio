@@ -5,4 +5,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
     Image uploadAndSaveImage(MultipartFile file, String folderName);
+    public String uploadBase64Image(String base64Data);
 }

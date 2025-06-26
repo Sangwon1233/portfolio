@@ -29,4 +29,13 @@ public class CloudinaryServiceImpl implements CloudinaryService {
             throw new RuntimeException("Cloudinary upload failed", e);
         }
     }
+
+    @Override
+    public Map<?, ?> uploadBase64Image(String base64) {
+        try {
+            return cloudinary.uploader().upload(base64, Map.of());
+        } catch (Exception e) {
+            throw new RuntimeException("Cloudinary 업로드 실패", e);
+        }
+    }
 }
