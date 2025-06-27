@@ -312,6 +312,13 @@ body {
     display: block;
     margin: 0 auto;
 }
+.board-detail-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    margin: 0 auto;
+}
 
 
 /* 반응형 디자인 - 변경 없음 */
@@ -485,12 +492,15 @@ body {
     line-height: 1.8;
     font-size: 17px;
     color: #444;
-    min-height: 150px; /* 내용 최소 높이 */
+    min-height: 150px;
     padding: 20px 0;
+    margin: 0 auto;
+    box-sizing: border-box;
     border-bottom: 1px dashed #eee;
     margin-bottom: 30px;
     white-space: pre-line;
     line-height: 1.6;
+    overflow-x: auto;
 }
 
 /* 상세 보기 및 글쓰기 페이지 버튼 */
