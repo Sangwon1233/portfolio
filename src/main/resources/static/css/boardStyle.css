@@ -306,6 +306,14 @@ body {
     color: #dc3545;
 }
 
+.board-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
 /* 반응형 디자인 - 변경 없음 */
 @media (max-width: 768px) {
     .main-container {
