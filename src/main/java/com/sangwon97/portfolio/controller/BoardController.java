@@ -84,9 +84,6 @@ public class BoardController {
         String username = auth.getName();
         board.setAuthor(username);
 
-        // sanitize는 필터에서 이미 처리됨
-        // String sanitizedContent = request.getParameter("content");
-        // board.setContent(sanitizedContent);
 
         boardService.save(board, files, "board");
         return "redirect:/board/list?type=" + board.getBoardType();
@@ -121,15 +118,6 @@ public class BoardController {
         if (!original.getAuthor().equals(principal.getName())) {
             throw new AccessDeniedException("수정 권한이 없습니다.");
         }
-
-        // original.setTitle(form.getTitle());
-        // original.setSubCategory(form.getSubCategory());
-        // original.setUpdatedAt(LocalDateTime.now());
-        // original.setContent(form.getContent());
-
-        // sanitize는 필터에서 이미 처리됨
-        // String sanitizedContent = request.getParameter("content");
-        // original.setContent(sanitizedContent);
 
         boardService.update(original, form, files, deleteImageIds, "board");
         return "redirect:/board/view/" + id;
